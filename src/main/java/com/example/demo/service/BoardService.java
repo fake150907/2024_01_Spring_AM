@@ -21,4 +21,9 @@ public class BoardService {
 		return boardRepository.getBoardById(boardId);
 	}
 
+	public int getBoardCnt() {
+
+		return boardRepository.getBoardCnt();
+	}
+
 }

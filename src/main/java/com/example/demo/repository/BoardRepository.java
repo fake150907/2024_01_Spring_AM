@@ -16,4 +16,10 @@ public interface BoardRepository {
 			""")
 	public Board getBoardById(int boardId);
 
+	@Select("""
+			SELECT COUNT(*)
+			FROM board
+			""")
+	public int getBoardCnt();
+
 }
