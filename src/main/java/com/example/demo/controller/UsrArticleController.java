@@ -62,6 +62,8 @@ public class UsrArticleController {
 
 		model.addAttribute("board", board);
 		model.addAttribute("pagesCount", pagesCount);
+		model.addAttribute("page", page);
+		model.addAttribute("boardId", boardId);
 		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("articles", articles);
 
