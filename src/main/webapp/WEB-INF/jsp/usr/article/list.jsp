@@ -23,7 +23,6 @@
 				</tr>
 			</thead>
 			<tbody>
-
 				<c:forEach var="article" items="${articles }">
 					<tr class="hover">
 						<td>${article.id }</td>
@@ -58,13 +57,28 @@
 	</div>
 
 	<!-- 	원래 페이징 -->
-	<div class="pagination flex justify-center mt-3">
+	<%-- 	<div class="pagination flex justify-center mt-3">
 		<div class="btn-group">
 			<c:forEach begin="1" end="${pagesCount }" var="i">
 				<a class="btn btn-sm ${param.page == i ? 'btn-active' : '' }" href="?page=${i }&boardId=${param.boardId}">${i }</a>
 			</c:forEach>
 		</div>
-	</div>
+	</div> --%>
+	<form class="flex justify-center mt-3" action="../article/list" method="POST">
+		<select class="select select-primary w-full max-w-xs">
+			<option disabled selected>검색어타입을 선택하세요</option>
+			<option>Title</option>
+			<option>Body</option>
+			<option>Writer</option>
+		</select>
+		<div>
+			<input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text"
+				placeholder="검색어를 입력해주세요" name="body" />
+		</div>
+		<div class="">
+			<input class="btn btn-outline btn-info" type="submit" value="검색" />
+		</div>
+	</form>
 </section>
 
 
