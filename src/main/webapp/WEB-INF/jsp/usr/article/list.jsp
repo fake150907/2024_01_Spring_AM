@@ -6,7 +6,21 @@
 
 <section class="mt-8 text-xl px-4">
 	<div class="mx-auto overflow-x-auto">
-		<div class="badge badge-outline">${articlesCount }개</div>
+		<div class="mb-4 flex">
+			<div class="badge badge-outline">${articlesCount }개</div>
+			<div class="flex-grow"></div>
+			<form action="">
+				<input type="hidden" name="boardId" value="${param.boardId }" /> <select
+					data-value="${param.searchKeywordTypeCode }" class="select select-primary w-full max-w-xs"
+					name="searchKeywordTypeCode">
+					<option value="title">title</option>
+					<option value="body">body</option>
+					<option value="title,body">title+body</option>
+				</select> <input value="${param.searchKeyword }" name="searchKeyword" type="text" placeholder="What is your searchKeyword?"
+					class="input input-bordered input-primary w-full max-w-xs" />
+				<button class="btn btn-outline btn-info" type="submit">검색</button>
+			</form>
+		</div>
 		<table class="table-box-1 table" border="1">
 			<colgroup>
 				<col style="width: 10%" />
@@ -40,18 +54,22 @@
 		<c:set var="startPage" value="${page -  paginationLen  >= 1 ? page - paginationLen : 1}" />
 		<c:set var="endPage" value="${page +  paginationLen  <= pagesCount ? page + paginationLen : pagesCount}" />
 
+		<c:set var="baseUri" value="?boardId=${boardId }" />
+		<c:set var="baseUri" value="${baseUri }&searchKeywordTypeCode=${searchKeywordTypeCode}" />
+		<c:set var="baseUri" value="${baseUri }&searchKeyword=${searchKeyword}" />
+
 		<c:if test="${startPage > 1 }">
-			<a class="btn btn-sm" href="?page=1&boardId=${boardId }">1</a>
+			<a class="btn btn-sm" href="${baseUri }&page=1">1</a>
 			<button class="btn btn-sm btn-disabled">...</button>
 		</c:if>
 
 		<c:forEach begin="${startPage }" end="${endPage }" var="i">
-			<a class="btn btn-sm ${param.page == i ? 'btn-active' : '' }" href="?page=${i }&boardId=${boardId}">${i }</a>
+			<a class="btn btn-sm ${param.page == i ? 'btn-active' : '' }" href="${baseUri }&page=${i }">${i }</a>
 		</c:forEach>
 
 		<c:if test="${endPage < pagesCount }">
 			<button class="btn btn-sm btn-disabled">...</button>
-			<a class="btn btn-sm" href="?page=${pagesCount }&boardId=${boardId }">${pagesCount }</a>
+			<a class="btn btn-sm" href="${baseUri }&page=${pagesCount }">${pagesCount }</a>
 		</c:if>
 
 	</div>
@@ -64,21 +82,6 @@
 			</c:forEach>
 		</div>
 	</div> --%>
-	<form class="flex justify-center mt-3" action="../article/list" method="POST">
-		<select class="select select-primary w-full max-w-xs">
-			<option value="title,body" disabled selected>검색어타입을 선택하세요</option>
-			<option value="title">Title</option>
-			<option value="body">Body</option>
-			<option value="extra__writer">Writer</option>
-		</select>
-		<div>
-			<input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text"
-				placeholder="검색어를 입력해주세요" name="body" />
-		</div>
-		<div class="">
-			<input class="btn btn-outline btn-info" type="submit" value="검색" />
-		</div>
-	</form>
 </section>
 
 
