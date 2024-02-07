@@ -66,10 +66,10 @@
 	</div> --%>
 	<form class="flex justify-center mt-3" action="../article/list" method="POST">
 		<select class="select select-primary w-full max-w-xs">
-			<option disabled selected>검색어타입을 선택하세요</option>
-			<option>Title</option>
-			<option>Body</option>
-			<option>Writer</option>
+			<option value="title,body" disabled selected>검색어타입을 선택하세요</option>
+			<option value="title">Title</option>
+			<option value="body">Body</option>
+			<option value="extra__writer">Writer</option>
 		</select>
 		<div>
 			<input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text"
