@@ -154,4 +154,52 @@ public interface ArticleRepository {
 	public List<Article> getForPrintArticles(int boardId, int limitFrom, int limitTake, String searchKeywordTypeCode,
 			String searchKeyword);
 
+	@Update("""
+			UPDATE article
+			SET goodReactionPoint = goodReactionPoint + 1
+			WHERE id = #{id}
+			""")
+	public void increaseGoodRp(int id);
+
+	@Update("""
+			UPDATE article
+			SET badReactionPoint = badReactionPoint + 1
+			WHERE id = #{id}
+			""")
+	public void increaseBadRp(int id);
+
+	@Update("""
+			UPDATE article
+			SET goodReactionPoint = goodReactionPoint - 1
+			WHERE id = #{id}
+			""")
+	public void decreaseGoodRp(int id);
+
+	@Update("""
+			UPDATE article
+			SET badReactionPoint = badReactionPoint - 1
+			WHERE id = #{id}
+			""")
+	public void decreaseBadRp(int id);
+
+	@Select("""
+			SELECT goodReactionPoint
+			FROM article
+			WHERE id = #{id}
+			""")
+	public int getGoodRpCount(int id);
+
+	@Select("""
+			SELECT badReactionPoint
+			FROM article
+			WHERE id = #{id}
+			""")
+	public int getBadRqCount(int id);
+
+	@Select("""
+			SELECT A.boardId
+			FROM article AS A
+			WHERE id = #{id}
+			""")
+	public int getBoardIdByArticle(int articleId);
 }
