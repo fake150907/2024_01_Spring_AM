@@ -115,6 +115,13 @@ public interface ArticleRepository {
 	public int increaseHitCount(int id);
 
 	@Select("""
+			SELECT hitCount
+			FROM article
+			WHERE id = #{id}
+			""")
+	public int getArticleHitCount(int id);
+
+	@Select("""
 			<script>
 			SELECT A.*, M.nickname AS extra__writer
 			FROM article AS A
