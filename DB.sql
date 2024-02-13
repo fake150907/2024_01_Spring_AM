@@ -39,6 +39,7 @@ CREATE TABLE `member`(
 
 ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
+ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER `body`;
 ##############################################
 # board 테이블에 데이터 넣기.
 INSERT INTO board
