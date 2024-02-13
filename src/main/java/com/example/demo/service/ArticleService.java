@@ -90,6 +90,10 @@ public class ArticleService {
 //		return articleRepository.getForPrintArticles(boardId);
 //	}
 
+	public void increaseHitCount(int id) {
+		articleRepository.increaseHitCount(id);
+	}
+
 	public List<Article> getForPrintArticles(int boardId, int itemsInAPage, int page, String searchKeywordTypeCode,
 			String searchKeyword) {
 

@@ -11,43 +11,48 @@
 			<div class="flex-grow"></div>
 			<form action="">
 				<input type="hidden" name="boardId" value="${param.boardId }" /> <select
-					data-value="${param.searchKeywordTypeCode }" class="select select-primary w-full max-w-xs"
+					data-value="${param.searchKeywordTypeCode }" class="select select-bordered select-sm w-full max-w-xs"
 					name="searchKeywordTypeCode">
 					<option value="title">title</option>
 					<option value="body">body</option>
 					<option value="title,body">title+body</option>
-				</select> <input value="${param.searchKeyword }" name="searchKeyword" type="text" placeholder="What is your searchKeyword?"
-					class="input input-bordered input-primary w-full max-w-xs" />
-				<button class="btn btn-outline btn-info" type="submit">검색</button>
+				</select> <input value="${param.searchKeyword }" name="searchKeyword" type="text" placeholder="searchKeyword?"
+					class="input-sm input input-bordered w-48 max-w-xs" />
+				<button class="btn btn-ghost btn-sm" type="submit">검색</button>
 			</form>
 		</div>
-		<table class="table-box-1 table" border="1">
-			<colgroup>
-				<col style="width: 10%" />
-				<col style="width: 20%" />
-				<col style="width: 60%" />
-				<col style="width: 10%" />
-			</colgroup>
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>날짜</th>
-					<th>제목</th>
-					<th>작성자</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="article" items="${articles }">
-					<tr class="hover">
-						<td>${article.id }</td>
-						<td>${article.regDate.substring(0,10) }</td>
-						<td><a href="detail?id=${article.id }">${article.title }</a></td>
-						<td>${article.extra__writer }</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
 	</div>
+	<table class="table-box-1 table" border="1">
+		<colgroup>
+			<col style="width: 10%" />
+			<col style="width: 20%" />
+			<col style="width: 60%" />
+			<col style="width: 10%" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>날짜</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>조회수</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<c:forEach var="article" items="${articles }">
+				<tr class="hover">
+					<td>${article.id }</td>
+					<td>${article.regDate.substring(0,10) }</td>
+					<td><a href="detail?id=${article.id }">${article.title }</a></td>
+					<td>${article.extra__writer }</td>
+					<td>${article.hitCount }</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	</div>
+
 	<!-- 	동적 페이징 -->
 	<div class="pagination flex justify-center mt-3">
 		<c:set var="paginationLen" value="3" />
@@ -75,13 +80,13 @@
 	</div>
 
 	<!-- 	원래 페이징 -->
-	<%-- 	<div class="pagination flex justify-center mt-3">
+	<div class="pagination flex justify-center mt-3">
 		<div class="btn-group">
 			<c:forEach begin="1" end="${pagesCount }" var="i">
 				<a class="btn btn-sm ${param.page == i ? 'btn-active' : '' }" href="?page=${i }&boardId=${param.boardId}">${i }</a>
 			</c:forEach>
 		</div>
-	</div> --%>
+	</div>
 </section>
 
 

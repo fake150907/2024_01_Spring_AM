@@ -32,6 +32,10 @@
 					<th>내용</th>
 					<td>${article.body }</td>
 				</tr>
+				<tr>
+					<th>조회수</th>
+					<td>${article.hitCount }</td>
+				</tr>
 			</tbody>
 		</table>
 		<div class="btns mt-5">
