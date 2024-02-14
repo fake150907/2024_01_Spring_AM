@@ -37,7 +37,7 @@ CREATE TABLE `member`(
     delDate DATETIME COMMENT '탈퇴 날짜'
 );
 
-create table reactionPoint(
+CREATE TABLE reactionPoint(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
@@ -50,8 +50,8 @@ create table reactionPoint(
 ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
 ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER `body`;
-ALTER TABLE article ADD COLUMN goodReactionPoint INT(10) UNSIGNED DEFAULT 0 NOT NULL;
-ALTER TABLE article ADD COLUMN badReactionPoint INT(10) UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE article ADD COLUMN goodReactionPoint INT(100) UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE article ADD COLUMN badReactionPoint INT(100) UNSIGNED DEFAULT 0 NOT NULL;
 ##############################################
 # board 테이블에 데이터 넣기.
 INSERT INTO board
@@ -169,7 +169,7 @@ ORDER BY id DESC;
 
 SELECT LAST_INSERT_ID();
 
-desc article;
+DESC article;
 
 ##########################################
 # member 테이블 데이터 INSERT

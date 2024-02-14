@@ -135,7 +135,7 @@ public class ArticleService {
 	}
 
 	public int getGoodRpCount(int id) {
-	
+
 		return articleRepository.getGoodRpCount(id);
 	}
 

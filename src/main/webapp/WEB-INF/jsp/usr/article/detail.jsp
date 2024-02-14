@@ -8,14 +8,8 @@
 	const params = {};
 	params.id = parseInt('${param.id}');
 
-	var isAlreadyAddGoodRp = $
-	{
-		isAlreadyAddGoodRp
-	};
-	var isAlreadyAddBadRp = $
-	{
-		isAlreadyAddBadRp
-	};
+	var isAlreadyAddGoodRp = ${isAlreadyAddGoodRp};
+	var isAlreadyAddBadRp = ${isAlreadyAddBadRp};
 </script>
 
 <script>
@@ -43,10 +37,6 @@
 </script>
 
 <script>
-	$(function() {
-		ArticleDetail__increaseHitCount();
-	})
-
 	function checkAddRpBefore() {
     <!-- 변수값에 따라 각 id가 부여된 버튼에 클래스 추가(이미 눌려있다는 색상 표시) -->
 		if (isAlreadyAddGoodRp == true) {
@@ -178,6 +168,7 @@
 			}
 		});
 	});
+	
 </script>
 
 <!-- 눌려 있는 버튼 색상 표현 -->
@@ -224,16 +215,48 @@
 			</tbody>
 		</table>
 		<c:if test="${isLogined }">
-			<span id="add-goodRp-btn" class="btn btn-outline"> 좋아요👍 <span class="add-goodRp ml-2">${foundArticle.goodReactionPoint}</span>
+			<span id="add-goodRp-btn" class="btn btn-outline">
+				좋아요👍
+				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>
+				❤️
+				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>
 			</span>
-			<span id="add-badRp-btn" class="ml-5 btn btn-outline"> 싫어요👎 <span class="add-badRp ml-2">${foundArticle.badReactionPoint}</span>
+			<span id="add-badRp-btn" class="ml-5 btn btn-outline">
+				싫어요👎
+				<span class="add-badRp ml-2">${article.badReactionPoint}</span>
+			</span>
+			<span id="add-goodRp-btn" class="btn btn-outline">
+				❤️
+				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>
+			</span>
+			<span id="add-goodRp-btn" class="btn btn-outline">
+				좋아요
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+						d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+					<span class="add-goodRp ml-2">${article.goodReactionPoint}</span></svg>
 			</span>
 		</c:if>
 		<c:if test="${!isLogined }">
-			<span id="request-login-good" class="btn btn-outline"> 좋아요👍 <span class="add-goodRp ml-2">${foundArticle.goodReactionPoint}</span>
+			<span id="request-login-good" class="btn btn-outline">
+				좋아요👍
+				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>
 			</span>
-			<span id="request-login-bad" class="ml-5 btn btn-outline"> 싫어요👎 <span class="add-badRp ml-2">${foundArticle.badReactionPoint}</span>
+			<span id="request-login-bad" class="ml-5 btn btn-outline">
+				싫어요👎
+				<span class="add-badRp ml-2">${article.badReactionPoint}</span>
 			</span>
+			<label class="swap swap-flip text-4xl"> <!-- this hidden checkbox controls the state --> <input
+				type="checkbox" />
+				<div id="request-login-good" class="swap-on">
+					❤️
+					<span class="add-heart ml-2">${article.goodReactionPoint}</span>
+				</div>
+				<div id="request-login-good" class="swap-off">
+					🤍
+					<span class="add-heart ml-2">${article.goodReactionPoint}</span>
+				</div>
+			</label>
 		</c:if>
 		<div class="btns mt-5">
 			<button class="btn btn-outline" type="button" onclick="history.back();">뒤로가기</button>
