@@ -71,7 +71,7 @@
 		});
         
         <!-- 좋아요 버튼 클릭 이벤트 및 ajax 실행 -->
-		$("#add-goodRp-btn").click(function() {
+		$("#add-goodRp-btn,#add-heart-btn").click(function() {
 			
             <!-- 이미 싫어요가 눌려 있는 경우 반려 -->
             if (isAlreadyAddBadRp == true) {
@@ -89,7 +89,9 @@
 					},
 					success : function(goodReactionPoint) {
 						$("#add-goodRp-btn").addClass("already-added");
+						$("#add-heart-btn").addClass("already-added");
 						$(".add-goodRp").html(goodReactionPoint);
+						$(".add-heart").html(goodReactionPoint);
 						isAlreadyAddGoodRp = true;
 					},
 					error : function() {
@@ -107,7 +109,9 @@
 					},
 					success : function(goodReactionPoint) {
 						$("#add-goodRp-btn").removeClass("already-added");
+						$("#add-heart-btn").removeClass("already-added");
 						$(".add-goodRp").html(goodReactionPoint);
+						$(".add-heart").html(goodReactionPoint);
 						isAlreadyAddGoodRp = false;
 					},
 					error : function() {
@@ -218,23 +222,14 @@
 			<span id="add-goodRp-btn" class="btn btn-outline">
 				좋아요👍
 				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>
-				❤️
-				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>
 			</span>
 			<span id="add-badRp-btn" class="ml-5 btn btn-outline">
 				싫어요👎
 				<span class="add-badRp ml-2">${article.badReactionPoint}</span>
 			</span>
-			<span id="add-goodRp-btn" class="btn btn-outline">
+			<span id="add-heart-btn" class="btn btn-outline">
 				❤️
-				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>
-			</span>
-			<span id="add-goodRp-btn" class="btn btn-outline">
-				좋아요
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-						d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-					<span class="add-goodRp ml-2">${article.goodReactionPoint}</span></svg>
+				<span class="add-heart ml-2">${article.goodReactionPoint}</span>
 			</span>
 		</c:if>
 		<c:if test="${!isLogined }">
