@@ -176,7 +176,7 @@
 </script>
 
 <!-- 눌려 있는 버튼 색상 표현 -->
-<style type="text/css">
+<style type="text/css">0
 .already-added {
 	background-color: #0D3EA3;
 	color: white;
@@ -218,6 +218,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<%@ include file="../comment/write.jspf"%>
 		<c:if test="${isLogined }">
 			<span id="add-goodRp-btn" class="btn btn-outline">
 				좋아요👍

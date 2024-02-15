@@ -1,0 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+</head>
+<body>
+	<style>
+.comment-box {
+	white-space: nowrap;
+	/* 가로방향으로 스크롤바를 무조건 생성(넘치치 않으면 스크롤바가 안생김) */
+	overflow: auto;
+}
+
+.collapse-content {
+	
+}
+</style>
+	<details class="collapse bg-base-200">
+		<summary class="collapse-title text-xl font-medium">Click to open/close</summary>
+		<div class="collapse-content">
+			<form action="../comment/commentWrite" method="POST">
+				<table class="login-box table-box-1" border="1">
+					<tbody>
+						<tr>
+							<th><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text"
+								placeholder="댓글을 작성해주세요" name="loginId" /></th>
+							<td><input class="btn btn-outline btn-info" type="submit" value="작성 " /></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</details>
+
+</body>
+</html>
