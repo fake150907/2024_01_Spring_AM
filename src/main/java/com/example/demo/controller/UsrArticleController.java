@@ -128,7 +128,7 @@ public class UsrArticleController {
 		}
 		if (Ut.isNullOrEmpty(body)) {
 			return Ut.jsHistoryBack("F-2", "내용을 입력해주세요");
-		}
+		} 
 
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
 

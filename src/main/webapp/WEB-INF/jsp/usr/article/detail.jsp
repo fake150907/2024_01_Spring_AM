@@ -176,7 +176,10 @@
 </script>
 
 <!-- 눌려 있는 버튼 색상 표현 -->
-<style type="text/css">0
+<style type="text/css">
+0
+
+
 .already-added {
 	background-color: #0D3EA3;
 	color: white;
@@ -242,17 +245,10 @@
 				싫어요👎
 				<span class="add-badRp ml-2">${article.badReactionPoint}</span>
 			</span>
-			<label class="swap swap-flip text-4xl"> <!-- this hidden checkbox controls the state --> <input
-				type="checkbox" />
-				<div id="request-login-good" class="swap-on">
-					❤️
-					<span class="add-heart ml-2">${article.goodReactionPoint}</span>
-				</div>
-				<div id="request-login-good" class="swap-off">
-					🤍
-					<span class="add-heart ml-2">${article.goodReactionPoint}</span>
-				</div>
-			</label>
+			<span id="request-login-good" class="btn btn-outline">
+				❤️
+				<span class="add-heart ml-2">${article.goodReactionPoint}</span>
+			</span>
 		</c:if>
 		<div class="btns mt-5">
 			<button class="btn btn-outline" type="button" onclick="history.back();">뒤로가기</button>

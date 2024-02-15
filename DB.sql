@@ -52,6 +52,7 @@ ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId
 ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER `body`;
 ALTER TABLE article ADD COLUMN goodReactionPoint INT(100) UNSIGNED DEFAULT 0 NOT NULL;
 ALTER TABLE article ADD COLUMN badReactionPoint INT(100) UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE reactionPoint ADD COLUMN relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드';
 ##############################################
 # board 테이블에 데이터 넣기.
 INSERT INTO board
@@ -169,7 +170,7 @@ ORDER BY id DESC;
 
 SELECT LAST_INSERT_ID();
 
-DESC article;
+desc article;
 
 ##########################################
 # member 테이블 데이터 INSERT
