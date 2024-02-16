@@ -16,9 +16,10 @@ public interface ReactionPointRepository {
 			boardId = #{boardId},
 			articleId = #{articleId},
 			memberId = #{memberId},
+			relTypeCode = #{relTypeCode},
 			pointTypeCode = 1
 			""")
-	public void addIncreasingGoodRpInfo(int boardId, int articleId, int memberId);
+	public void addIncreasingGoodRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
 
 	@Delete("""
 			DELETE FROM reactionPoint
@@ -26,8 +27,9 @@ public interface ReactionPointRepository {
 			AND articleId = #{articleId}
 			AND memberId = #{memberId}
 			AND pointTypeCode = 1
+			AND relTypeCode = #{relTypeCode}
 			""")
-	public void deleteGoodRpInfo(int boardId, int articleId, int memberId);
+	public void deleteGoodRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
 
 	@Insert("""
 			INSERT INTO reactionPoint
@@ -37,9 +39,10 @@ public interface ReactionPointRepository {
 			boardId = #{boardId},
 			articleId = #{articleId},
 			memberId = #{memberId},
+			relTypeCode = #{relTypeCode},
 			pointTypeCode = 2
 			""")
-	public void addIncreasingBadRpInfo(int boardId, int articleId, int memberId);
+	public void addIncreasingBadRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
 
 	@Delete("""
 			DELETE FROM reactionPoint
@@ -47,8 +50,9 @@ public interface ReactionPointRepository {
 			AND articleId = #{articleId}
 			AND memberId = #{memberId}
 			AND pointTypeCode = 2
+			AND relTypeCode = #{relTypeCode}
 			""")
-	public void deleteBadRpInfo(int boardId, int articleId, int memberId);
+	public void deleteBadRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
 
 	@Select("""
 			SELECT pointTypeCode

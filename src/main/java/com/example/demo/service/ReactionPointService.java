@@ -44,25 +44,25 @@ public class ReactionPointService {
 	}
 
 	// reactionPoint 테이블에 좋아요/싫어요 로그 기록 관련 메서드
-	public void addIncreasingGoodRpInfo(int articleId, int memberId) {
+	public void addIncreasingGoodRpInfo(String relTypeCode, int articleId, int memberId) {
 		// 현재 게시물이 소속된 게시판 id를 가져옴
 		int boardId = articleService.getBoardIdByArticle(articleId);
-		reactionPointRepository.addIncreasingGoodRpInfo(boardId, articleId, memberId);
+		reactionPointRepository.addIncreasingGoodRpInfo(relTypeCode, boardId, articleId, memberId);
 	}
 
-	public void deleteGoodRpInfo(int articleId, int memberId) {
+	public void deleteGoodRpInfo(String relTypeCode, int articleId, int memberId) {
 		int boardId = articleService.getBoardIdByArticle(articleId);
-		reactionPointRepository.deleteGoodRpInfo(boardId, articleId, memberId);
+		reactionPointRepository.deleteGoodRpInfo(relTypeCode, boardId, articleId, memberId);
 	}
 
-	public void addIncreasingBadRpInfo(int articleId, int memberId) {
+	public void addIncreasingBadRpInfo(String relTypeCode, int articleId, int memberId) {
 		int boardId = articleService.getBoardIdByArticle(articleId);
-		reactionPointRepository.addIncreasingBadRpInfo(boardId, articleId, memberId);
+		reactionPointRepository.addIncreasingBadRpInfo(relTypeCode, boardId, articleId, memberId);
 	}
 
-	public void deleteBadRpInfo(int articleId, int memberId) {
+	public void deleteBadRpInfo(String relTypeCode, int articleId, int memberId) {
 		int boardId = articleService.getBoardIdByArticle(articleId);
-		reactionPointRepository.deleteBadRpInfo(boardId, articleId, memberId);
+		reactionPointRepository.deleteBadRpInfo(relTypeCode, boardId, articleId, memberId);
 	}
 
 	public boolean isAlreadyAddGoodRp(int articleId) {

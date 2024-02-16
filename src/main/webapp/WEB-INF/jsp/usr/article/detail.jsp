@@ -84,9 +84,7 @@
 				$.ajax({
 					url : "/usr/reactionPoint/increaseGoodRp",
 					type : "POST",
-					data : {
-						id : params.id
-					},
+					data : { relTypeCode: 'article', id : params.id },
 					success : function(goodReactionPoint) {
 						$("#add-goodRp-btn").addClass("already-added");
 						$("#add-heart-btn").addClass("already-added");
@@ -104,9 +102,7 @@
 				$.ajax({
 					url : "/usr/reactionPoint/decreaseGoodRp",
 					type : "POST",
-					data : {
-						id : params.id
-					},
+					data : { relTypeCode: 'article', id : params.id },
 					success : function(goodReactionPoint) {
 						$("#add-goodRp-btn").removeClass("already-added");
 						$("#add-heart-btn").removeClass("already-added");
@@ -137,9 +133,7 @@
 				$.ajax({
 					url : "/usr/reactionPoint/increaseBadRp",
 					type : "POST",
-					data : {
-						id : params.id
-					},
+					data : { relTypeCode: 'article', id : params.id },
 					success : function(badReactionPoint) {
 						$("#add-badRp-btn").addClass("already-added");
 						$(".add-badRp").html(badReactionPoint);
@@ -155,9 +149,7 @@
 				$.ajax({
 					url : "/usr/reactionPoint/decreaseBadRp",
 					type : "POST",
-					data : {
-						id : params.id
-					},
+					data : { relTypeCode: 'article', id : params.id },
 					success : function(badReactionPoint) {
 						$("#add-badRp-btn").removeClass("already-added");
 						$(".add-badRp").html(badReactionPoint);
@@ -178,6 +170,20 @@
 <!-- 눌려 있는 버튼 색상 표현 -->
 <style type="text/css">
 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .already-added {

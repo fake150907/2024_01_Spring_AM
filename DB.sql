@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS `Spring_AM_01`;
 CREATE DATABASE `Spring_AM_01`;
 USE `Spring_AM_01`;
 
+######################################################################################################
 # board 테이블 생성
 CREATE TABLE board(
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -13,6 +14,8 @@ CREATE TABLE board(
     delDate DATETIME COMMENT '삭제 날짜'
 );
 
+######################################################################################################
+# article 테이블 생성
 CREATE TABLE article(
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
@@ -21,7 +24,14 @@ CREATE TABLE article(
     `body` TEXT NOT NULL
 );
 
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
+ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER `body`;
+ALTER TABLE article ADD COLUMN goodReactionPoint INT(100) UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE article ADD COLUMN badReactionPoint INT(100) UNSIGNED DEFAULT 0 NOT NULL;
 
+######################################################################################################
+# member 테이블 생성
 CREATE TABLE `member`(
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
@@ -36,7 +46,8 @@ CREATE TABLE `member`(
     delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴 전, 1=탈퇴 후)',
     delDate DATETIME COMMENT '탈퇴 날짜'
 );
-
+######################################################################################################
+# reactionPoint 테이블 생성
 CREATE TABLE reactionPoint(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
@@ -46,13 +57,31 @@ CREATE TABLE reactionPoint(
 	memberId INT(10) UNSIGNED NOT NULL,
 	pointTypeCode INT(10) UNSIGNED NOT NULL
 );
-
-ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
-ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
-ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER `body`;
-ALTER TABLE article ADD COLUMN goodReactionPoint INT(100) UNSIGNED DEFAULT 0 NOT NULL;
-ALTER TABLE article ADD COLUMN badReactionPoint INT(100) UNSIGNED DEFAULT 0 NOT NULL;
 ALTER TABLE reactionPoint ADD COLUMN relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드';
+######################################################################################################
+# Select하기
+SELECT * 
+FROM article;
+
+SELECT * 
+FROM board;
+
+SELECT * 
+FROM `member`;
+
+SELECT * 
+FROM reactionPoint;
+
+SELECT LAST_INSERT_ID();
+
+DESC article;
+
+DESC board;
+
+DESC `member`;
+
+DESC reactionPoint;
+
 ##############################################
 # board 테이블에 데이터 넣기.
 INSERT INTO board
@@ -170,7 +199,7 @@ ORDER BY id DESC;
 
 SELECT LAST_INSERT_ID();
 
-desc article;
+DESC article;
 
 ##########################################
 # member 테이블 데이터 INSERT
