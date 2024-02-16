@@ -58,6 +58,19 @@ CREATE TABLE reactionPoint(
 	pointTypeCode INT(10) UNSIGNED NOT NULL
 );
 ALTER TABLE reactionPoint ADD COLUMN relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드';
+
+######################################################################################################
+# comment 테이블 생성
+CREATE TABLE `comment`(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    articleId INT(10) UNSIGNED NOT NULL,
+    `body` TEXT NOT NULL,
+    goodReactionPoint INT(100) UNSIGNED DEFAULT 0 NOT NULL,
+    badReactionPoint INT(100) UNSIGNED DEFAULT 0 NOT NULL
+);
 ######################################################################################################
 # Select하기
 SELECT * 
@@ -71,6 +84,9 @@ FROM `member`;
 
 SELECT * 
 FROM reactionPoint;
+
+SELECT * 
+FROM `comment`;
 
 SELECT LAST_INSERT_ID();
 
