@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -29,5 +31,15 @@ public interface CommentRepository {
 			WHERE id = #{id}
 			""")
 	public Comment getComment(int id);
+
+	@Select("""
+			SELECT C.*, M.nickname AS extra__writer
+			FROM `comment` AS C
+			INNER JOIN `member` AS M
+			ON C.memberId = M.id
+			WHERE articleId = 1
+			ORDER BY C.id DESC;
+			""")
+	public List<Comment> getForPrintcomments(int articleId);
 
 }

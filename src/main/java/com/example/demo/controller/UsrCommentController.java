@@ -1,15 +1,19 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.CommentService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
+import com.example.demo.vo.Board;
 import com.example.demo.vo.Comment;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
@@ -45,5 +49,18 @@ public class UsrCommentController {
 		model.addAttribute("comment", comment);
 
 		return Ut.jsReplace(writeCommentRd.getResultCode(), writeCommentRd.getMsg(), "../article/detail?id=" + id);
+	}
+
+	@RequestMapping("/usr/comment/list")
+	@ResponseBody
+	public List<Comment> showCommentList(HttpServletRequest req, Model model, int articleId) {
+
+		Rq rq = (Rq) req.getAttribute("rq");
+
+		List<Comment> comments = commentService.getForPrintcomments(articleId);
+
+		model.addAttribute("comments", comments);
+
+		return comments;
 	}
 }

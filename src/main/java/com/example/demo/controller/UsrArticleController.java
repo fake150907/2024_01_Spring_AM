@@ -34,6 +34,8 @@ public class UsrArticleController {
 
 	@Autowired
 	private ReactionPointService reactionPointService;
+	@Autowired
+	private UsrCommentController usrCommentController;
 
 	public UsrArticleController() {
 
@@ -84,11 +86,13 @@ public class UsrArticleController {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		usrCommentController.showCommentList(req, model, id);
 
 		model.addAttribute("article", article);
 		model.addAttribute("isLogined", rq.isLogined());
 		model.addAttribute("isAlreadyAddGoodRp", reactionPointService.isAlreadyAddGoodRp(id));
 		model.addAttribute("isAlreadyAddBadRp", reactionPointService.isAlreadyAddBadRp(id));
+		model.addAttribute("comments", usrCommentController.showCommentList(req, model, id));
 
 		return "usr/article/detail";
 	}
@@ -128,7 +132,7 @@ public class UsrArticleController {
 		}
 		if (Ut.isNullOrEmpty(body)) {
 			return Ut.jsHistoryBack("F-2", "내용을 입력해주세요");
-		} 
+		}
 
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
 

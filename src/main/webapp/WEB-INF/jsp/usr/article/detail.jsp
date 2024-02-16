@@ -248,6 +248,30 @@
 					</div>
 				</div>
 			</details>
+			<table class="table-box-1 table" border="1">
+				<colgroup>
+					<col style="width: 10%" />
+					<col style="width: 20%" />
+					<col style="width: 60%" />
+					<col style="width: 10%" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>날짜</th>
+						<th>작성자</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="comment" items="${comments }">
+						<tr class="hover">
+							<td>${comment.id }</td>
+							<td>${comment.regDate.substring(0,10) }</td>
+							<td>${comment.extra__writer }</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 
 			<span id="add-goodRp-btn" class="btn btn-outline">
 				좋아요👍
