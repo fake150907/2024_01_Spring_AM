@@ -18,11 +18,11 @@ public class CommentService {
 
 		int id = commentRepository.getLastInsertId();
 
-		return ResultData.from("S-1", Ut.f("%d번 글이 생성되었습니다", id), "id", id);
+		return ResultData.from("S-1", Ut.f("%d번 댓글이 생성되었습니다", id), "id", id);
 	}
 
-	public Comment getcomment(int id) {
-		return commentRepository.getArticle(id);
+	public Comment getComment(int id) {
+		return commentRepository.getComment(id);
 	}
 
 }

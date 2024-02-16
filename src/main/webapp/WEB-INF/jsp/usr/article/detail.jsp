@@ -1,3 +1,4 @@
+<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="ARTICLE DETAIL"></c:set>
@@ -163,29 +164,36 @@
 				return;
 			}
 		});
-	});
+		
+	});		
 	
+	    
+	    
+</script>
+
+<script>
+ $(document).ready(function() {
+<!-- 댓글 작성 클릭 이벤트 및 ajax 실행 -->
+	$("#add-comment-btn").click(function() {
+			$.ajax({
+				url : "/usr/comment/commentWrite",
+				type : "POST",
+				data : { id : params.id, body: "body"= + $("name.body")},
+				success : function() {
+					alert('댓글 달기 성공!');
+				},
+				error : function() {
+				alert('서버 에러, 다시 시도해주세요.');
+				}
+			});
+		} else {
+		return;
+	});
+}); 
 </script>
 
 <!-- 눌려 있는 버튼 색상 표현 -->
 <style type="text/css">
-0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .already-added {
 	background-color: #0D3EA3;
 	color: white;
@@ -227,8 +235,20 @@
 				</tr>
 			</tbody>
 		</table>
-		<%@ include file="../comment/write.jspf"%>
 		<c:if test="${isLogined }">
+			<details class="collapse bg-base-200">
+				<summary class="collapse-title text-xl font-medium">Comment</summary>
+				<div class="comment-container">
+					<div style="padding: 20px;" class="comment-write-box">
+						<form action="../comment/commentWrite">
+							<input type="hidden" name="id" value="${article.id }" /> <input name="body" type="text"
+								placeholder="Comment here" class="input input-bordered input-lg w-full max-w-xs" />
+							<button id="add-comment-btn" type="submit" class="btn btn-outline btn-success">댓글 등록</button>
+						</form>
+					</div>
+				</div>
+			</details>
+
 			<span id="add-goodRp-btn" class="btn btn-outline">
 				좋아요👍
 				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>
