@@ -240,38 +240,45 @@
 				<summary class="collapse-title text-xl font-medium">Comment</summary>
 				<div class="comment-container">
 					<div style="padding: 20px;" class="comment-write-box">
-						<form action="../comment/commentWrite">
+						<form action="../comment/doCommentWrite">
 							<input type="hidden" name="id" value="${article.id }" /> <input name="body" type="text"
 								placeholder="Comment here" class="input input-bordered input-lg w-full max-w-xs" />
 							<button id="add-comment-btn" type="submit" class="btn btn-outline btn-success">댓글 등록</button>
 						</form>
 					</div>
 				</div>
-			</details>
-			<table class="table-box-1 table" border="1">
-				<colgroup>
-					<col style="width: 10%" />
-					<col style="width: 20%" />
-					<col style="width: 60%" />
-					<col style="width: 10%" />
-				</colgroup>
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>날짜</th>
-						<th>작성자</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="comment" items="${comments }">
-						<tr class="hover">
-							<td>${comment.id }</td>
-							<td>${comment.regDate.substring(0,10) }</td>
-							<td>${comment.extra__writer }</td>
+				<table class="table-box-1 table" border="1">
+					<colgroup>
+						<col style="width: 10%" />
+						<col style="width: 10%" />
+						<col style="width: 40%" />
+						<col style="width: 10%" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th>날짜</th>
+							<th>작성자</th>
+							<th>내용</th>
+							<th>수정, 삭제</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<c:forEach var="comment" items="${comments }">
+							<tr class="hover">
+								<td>${comment.regDate.substring(0,10) }</td>
+								<td>${comment.extra__writer }</td>
+								<td>${comment.body }</td>
+								<td><c:if test="${article.userCanModify }">
+										<a class="btn btn-sm" href="../comment/modify?id=${article.id }">수정</a>
+									</c:if> <c:if test="${article.userCanDelete }">
+										<a class="btn btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
+											href="../comment/doCommentDelete?articleId=${article.id }&commentId=${comment.id}">삭제</a>
+									</c:if></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</details>
 
 			<span id="add-goodRp-btn" class="btn btn-outline">
 				좋아요👍
@@ -287,6 +294,32 @@
 			</span>
 		</c:if>
 		<c:if test="${!isLogined }">
+			<details class="collapse bg-base-200">
+				<summary class="collapse-title text-xl font-medium">Comment</summary>
+				<table class="table-box-1 table" border="1">
+					<colgroup>
+						<col style="width: 10%" />
+						<col style="width: 10%" />
+						<col style="width: 30%" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th>날짜</th>
+							<th>작성자</th>
+							<th>내용</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="comment" items="${comments }">
+							<tr class="hover">
+								<td>${comment.regDate.substring(0,10) }</td>
+								<td>${comment.extra__writer }</td>
+								<td>${comment.body }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</details>
 			<span id="request-login-good" class="btn btn-outline">
 				좋아요👍
 				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>

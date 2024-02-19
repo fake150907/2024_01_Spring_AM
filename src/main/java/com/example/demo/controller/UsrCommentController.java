@@ -28,9 +28,9 @@ public class UsrCommentController {
 	@Autowired
 	private ArticleService articleService;
 
-	@RequestMapping("/usr/comment/commentWrite")
+	@RequestMapping("/usr/comment/doCommentWrite")
 	@ResponseBody
-	public String commentWrite(Model model, HttpServletRequest req, int id, String body) {
+	public String doCommentWrite(Model model, HttpServletRequest req, int id, String body) {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		if (Ut.isNullOrEmpty(body)) {
@@ -40,9 +40,9 @@ public class UsrCommentController {
 		ResultData<Integer> writeCommentRd = commentService.writecomment(rq.getLoginedMemberId(), id, body);
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
-		int Commentid = (int) writeCommentRd.getData1();
+		int CommentId = (int) writeCommentRd.getData1();
 
-		Comment comment = commentService.getComment(Commentid);
+		Comment comment = commentService.getComment(CommentId);
 
 		model.addAttribute("isLogined", rq.isLogined());
 		model.addAttribute("article", article);
@@ -51,7 +51,7 @@ public class UsrCommentController {
 		return Ut.jsReplace(writeCommentRd.getResultCode(), writeCommentRd.getMsg(), "../article/detail?id=" + id);
 	}
 
-	@RequestMapping("/usr/comment/list")
+	@RequestMapping("/usr/comment/commentList")
 	@ResponseBody
 	public List<Comment> showCommentList(HttpServletRequest req, Model model, int articleId) {
 
@@ -62,5 +62,27 @@ public class UsrCommentController {
 		model.addAttribute("comments", comments);
 
 		return comments;
+	}
+
+	// 로그인 체크 -> 유무 체크 -> 권한 체크 -> 삭제2
+	@RequestMapping("/usr/comment/doCommentDelete")
+	@ResponseBody
+	public String doDelete(HttpServletRequest req, int articleId, int commentId) {
+		Rq rq = (Rq) req.getAttribute("rq");
+
+		Comment comment = commentService.getComment(commentId);
+
+		if (comment == null) {
+			return Ut.jsHistoryBack("F-1", "해당 댓글이 존재하지 않습니다");
+		}
+
+		ResultData loginedMemberCanDeleteRd = commentService.userCanDelete(rq.getLoginedMemberId(), comment);
+
+		if (loginedMemberCanDeleteRd.isSuccess()) {
+			commentService.deleteComment(commentId);
+		}
+
+		return Ut.jsReplace(loginedMemberCanDeleteRd.getResultCode(), loginedMemberCanDeleteRd.getMsg(),
+				"../article/detail?id=" + articleId);
 	}
 }

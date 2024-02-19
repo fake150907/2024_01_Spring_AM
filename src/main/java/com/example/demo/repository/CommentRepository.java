@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -41,5 +42,8 @@ public interface CommentRepository {
 			ORDER BY C.id DESC;
 			""")
 	public List<Comment> getForPrintcomments(int articleId);
+
+	@Delete("DELETE FROM `comment` WHERE id = #{commentId}")
+	public void deleteComment(int commentId);
 
 }
