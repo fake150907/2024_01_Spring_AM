@@ -17,5 +17,6 @@ public class Comment {
 	private int goodReactionPoint;
 	private int badReactionPoint;
 	private String extra__writer;
-
+	private boolean userCanModify;
+	private boolean userCanDelete;
 }

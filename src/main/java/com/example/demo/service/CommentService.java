@@ -29,21 +29,54 @@ public class CommentService {
 	}
 
 	public List<Comment> getForPrintcomments(int articleId) {
-
+		
 		return commentRepository.getForPrintcomments(articleId);
-	}
-
-	public ResultData userCanDelete(int loginedMemberId, Comment comment) {
-		if (comment.getMemberId() != loginedMemberId) {
-			return ResultData.from("F-2", "해당 댓글에 대한 삭제 권한이 없습니다");
-		}
-
-		return ResultData.from("S-1", Ut.f("해당 댓글이 삭제 되었습니다", comment.getId()));
 	}
 
 	public void deleteComment(int commentId) {
 		commentRepository.deleteComment(commentId);
 
+	}
+
+	public void modifyComment(int commentId, int articleId, String body) {
+		commentRepository.modifyComment(commentId, articleId, body);
+	}
+
+	public Comment getForPrintComment(int loginedMemberId, int commentId) {
+		Comment comment = commentRepository.getForPrintComment(commentId);
+
+		controlForPrintData(loginedMemberId, comment);
+
+		return comment;
+	}
+
+	private void controlForPrintData(int loginedMemberId, Comment comment) {
+		if (comment == null) {
+			return;
+		}
+		ResultData userCanModifyRd = userCanModify(loginedMemberId, comment);
+		comment.setUserCanModify(userCanModifyRd.isSuccess());
+
+		ResultData userCanDeleteRd = userCanDelete(loginedMemberId, comment);
+		comment.setUserCanDelete(userCanDeleteRd.isSuccess());
+	}
+
+	public ResultData userCanDelete(int loginedMemberId, Comment comment) {
+
+		if (comment.getMemberId() != loginedMemberId) {
+			return ResultData.from("F-2", Ut.f("%d번 댓글에 대한 삭제 권한이 없습니다", comment.getId()));
+		}
+
+		return ResultData.from("S-1", Ut.f("%d번 댓글이 삭제 되었습니다", comment.getId()));
+	}
+
+	public ResultData userCanModify(int loginedMemberId, Comment comment) {
+
+		if (comment.getMemberId() != loginedMemberId) {
+			return ResultData.from("F-2", Ut.f("%d번 댓글에 대한 수정 권한이 없습니다", comment.getId()));
+		}
+
+		return ResultData.from("S-1", Ut.f("%d번 댓글이 수정했습니다", comment.getId()));
 	}
 
 }

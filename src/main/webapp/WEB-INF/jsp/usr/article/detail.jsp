@@ -171,26 +171,6 @@
 	    
 </script>
 
-<script>
- $(document).ready(function() {
-<!-- 댓글 작성 클릭 이벤트 및 ajax 실행 -->
-	$("#add-comment-btn").click(function() {
-			$.ajax({
-				url : "/usr/comment/commentWrite",
-				type : "POST",
-				data : { id : params.id, body: "body"= + $("name.body")},
-				success : function() {
-					alert('댓글 달기 성공!');
-				},
-				error : function() {
-				alert('서버 에러, 다시 시도해주세요.');
-				}
-			});
-		} else {
-		return;
-	});
-}); 
-</script>
 
 <!-- 눌려 있는 버튼 색상 표현 -->
 <style type="text/css">
@@ -237,7 +217,7 @@
 		</table>
 		<c:if test="${isLogined }">
 			<details class="collapse bg-base-200">
-				<summary class="collapse-title text-xl font-medium">Comment</summary>
+				<summary class="collapse-title text-xl font-medium">Comment(${comments.size() })</summary>
 				<div class="comment-container">
 					<div style="padding: 20px;" class="comment-write-box">
 						<form action="../comment/doCommentWrite">
@@ -268,12 +248,33 @@
 								<td>${comment.regDate.substring(0,10) }</td>
 								<td>${comment.extra__writer }</td>
 								<td>${comment.body }</td>
-								<td><c:if test="${article.userCanModify }">
-										<a class="btn btn-sm" href="../comment/modify?id=${article.id }">수정</a>
-									</c:if> <c:if test="${article.userCanDelete }">
+								<td><c:if test="${comment.memberId == loginedMemberId}">
+										<span class="comment-modify-btn btn btn-sm">수정</span>
 										<a class="btn btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
 											href="../comment/doCommentDelete?articleId=${article.id }&commentId=${comment.id}">삭제</a>
 									</c:if></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<table class="table table-review" style="padding: 3em; height: 300px;">
+					<tbody>
+						<tr style="text-align: center;">
+							<th width="15%">작성자</th>
+							<th width="50%">리뷰내용</th>
+							<th width="15%">날짜</th>
+							<th width="10%">추천</th>
+						</tr>
+						<c:forEach items="${comments }" var="comment" varStatus="i">
+							<tr>
+								<td>${comment.extra__writer}</td>
+								<td><input class="comment_body" type="text" value="${comment.body}" autofocus disabled></td>
+								<td><c:if test="${comment.memberId == loginedMemberId}">
+										<span class="comment-modify-btn btn btn-sm">수정</span>
+										<a class="btn btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
+											href="../comment/doCommentDelete?articleId=${article.id }&commentId=${comment.id}">삭제</a>
+									</c:if> <br> <label>${comment.regDate.substring(0,10) }</label></td>
+								<td align="center">${comment.goodReactionPoint}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -295,7 +296,7 @@
 		</c:if>
 		<c:if test="${!isLogined }">
 			<details class="collapse bg-base-200">
-				<summary class="collapse-title text-xl font-medium">Comment</summary>
+				<summary class="collapse-title text-xl font-medium">Comment(${comments.size() })</summary>
 				<table class="table-box-1 table" border="1">
 					<colgroup>
 						<col style="width: 10%" />

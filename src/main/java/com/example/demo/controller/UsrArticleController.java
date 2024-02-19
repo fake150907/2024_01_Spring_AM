@@ -86,13 +86,13 @@ public class UsrArticleController {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-		usrCommentController.showCommentList(req, model, id);
 
 		model.addAttribute("article", article);
 		model.addAttribute("isLogined", rq.isLogined());
 		model.addAttribute("isAlreadyAddGoodRp", reactionPointService.isAlreadyAddGoodRp(id));
 		model.addAttribute("isAlreadyAddBadRp", reactionPointService.isAlreadyAddBadRp(id));
 		model.addAttribute("comments", usrCommentController.showCommentList(req, model, id));
+		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 
 		return "usr/article/detail";
 	}

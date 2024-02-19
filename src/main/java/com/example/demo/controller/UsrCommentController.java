@@ -70,7 +70,7 @@ public class UsrCommentController {
 	public String doDelete(HttpServletRequest req, int articleId, int commentId) {
 		Rq rq = (Rq) req.getAttribute("rq");
 
-		Comment comment = commentService.getComment(commentId);
+		Comment comment = commentService.getForPrintComment(rq.getLoginedMemberId(), commentId);
 
 		if (comment == null) {
 			return Ut.jsHistoryBack("F-1", "해당 댓글이 존재하지 않습니다");
@@ -83,6 +83,42 @@ public class UsrCommentController {
 		}
 
 		return Ut.jsReplace(loginedMemberCanDeleteRd.getResultCode(), loginedMemberCanDeleteRd.getMsg(),
+				"../article/detail?id=" + articleId);
+	}
+
+	@RequestMapping("/usr/comment/modify")
+	public String showCommentModify(HttpServletRequest req, Model model, int articleId, int commentId) {
+		Rq rq = (Rq) req.getAttribute("rq");
+
+		Comment comment = commentService.getForPrintComment(rq.getLoginedMemberId(), commentId);
+
+		if (comment == null) {
+			return Ut.jsHistoryBack("F-1", "해당 댓글은 존재하지 않습니다");
+		}
+
+		model.addAttribute("comment", comment);
+
+		return "usr/comment/modify";
+	}
+
+	@RequestMapping("/usr/comment/doCommentModify")
+	@ResponseBody
+	public String doModify(HttpServletRequest req, int articleId, int commentId, String body) {
+		Rq rq = (Rq) req.getAttribute("rq");
+
+		Comment comment = commentService.getForPrintComment(rq.getLoginedMemberId(), commentId);
+
+		if (comment == null) {
+			return Ut.jsHistoryBack("F-1", "해당 댓글이 존재하지 않습니다");
+		}
+
+		ResultData loginedMemberCanModifyRd = commentService.userCanModify(rq.getLoginedMemberId(), comment);
+
+		if (loginedMemberCanModifyRd.isSuccess()) {
+			commentService.modifyComment(commentId, articleId, body);
+		}
+
+		return Ut.jsReplace(loginedMemberCanModifyRd.getResultCode(), loginedMemberCanModifyRd.getMsg(),
 				"../article/detail?id=" + articleId);
 	}
 }

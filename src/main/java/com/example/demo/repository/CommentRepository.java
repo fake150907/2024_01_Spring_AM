@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Comment;
@@ -38,12 +39,32 @@ public interface CommentRepository {
 			FROM `comment` AS C
 			INNER JOIN `member` AS M
 			ON C.memberId = M.id
-			WHERE articleId = 1
+			WHERE articleId = #{articleId}
 			ORDER BY C.id DESC;
 			""")
 	public List<Comment> getForPrintcomments(int articleId);
 
 	@Delete("DELETE FROM `comment` WHERE id = #{commentId}")
 	public void deleteComment(int commentId);
+
+	@Update("""
+			UPDATE `comment`
+			<set>
+				<if test="body != null and body != ''">`body` = #{body},</if>
+				updateDate = NOW()
+			</set>
+			WHERE commentId = #{commentId}
+			AND articleId = #{articleId}
+			""")
+	public void modifyComment(int commentId, int articleId, String body);
+
+	@Select("""
+			SELECT C.*, M.nickname AS extra__writer
+			FROM `comment` AS C
+			INNER JOIN `member` AS M
+			ON C.memberId = M.id
+			WHERE C.id = #{commentId}
+			""")
+	public Comment getForPrintComment(int commentId);
 
 }
