@@ -171,12 +171,52 @@
 	    
 </script>
 
+<script>
+$(document).ready(function() {
+	$('.edit').on('click', function(){
+		$('.review_content').attr('disabled', true);
+		$(this).parent().prev().children().attr('disabled', false);
+		$(this).attr('hidden', true);
+		$(this).next().attr('hidden', true); 
+		$(this).next().next().next().attr('hidden', true);
+		$(this).parent().append('<button type="button" class="btn btn-default" id="btnUpdate" style="margin:0">등록</button>')
+	});
+	
+		$(document).on('click','#btnUpdate', function() {
+			 var articleId = ${article.id};
+			 var commentId = $(this).parent().prev().prev().prev().children().val(); 
+			 var body = $(this).parent().prev().children().val();
+			 
+					$.ajax({
+						url:'/usr/comment/doCommentModify',
+				         type: 'post',
+					     data: {
+					    	 "articleId":articleId,
+					 		"commentId" : commentId,
+							"body" :body
+						},
+				         success: function(result) {
+				        	 location.reload();
+				          },
+				          error: function() {
+				          	alert('리뷰 수정 실패');
+				          }
+					});	
+		})
+	
+});
+</script>
+
 
 <!-- 눌려 있는 버튼 색상 표현 -->
 <style type="text/css">
 .already-added {
 	background-color: #0D3EA3;
 	color: white;
+}
+
+.do-update-body {
+	display: inline-block;
 }
 </style>
 
@@ -249,7 +289,7 @@
 								<td>${comment.extra__writer }</td>
 								<td>${comment.body }</td>
 								<td><c:if test="${comment.memberId == loginedMemberId}">
-										<span class="comment-modify-btn btn btn-sm">수정</span>
+										<span id="comment-modify-btn" class="btn btn-sm">수정</span>
 										<a class="btn btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
 											href="../comment/doCommentDelete?articleId=${article.id }&commentId=${comment.id}">삭제</a>
 									</c:if></td>
@@ -260,21 +300,23 @@
 				<table class="table table-review" style="padding: 3em; height: 300px;">
 					<tbody>
 						<tr style="text-align: center;">
-							<th width="15%">작성자</th>
+							<th width="0%"></th>
+							<th width="15%">닉네임</th>
 							<th width="50%">리뷰내용</th>
-							<th width="15%">날짜</th>
+							<th width="15%">작성일</th>
 							<th width="10%">추천</th>
 						</tr>
-						<c:forEach items="${comments }" var="comment" varStatus="i">
+						<c:forEach items="${comments }" var="comment">
 							<tr>
+								<td><input type="hidden" id="commentId" value="${comment.id }"> <input type="hidden" id="articleId"
+									value="${article.id }"></td>
 								<td>${comment.extra__writer}</td>
-								<td><input class="comment_body" type="text" value="${comment.body}" autofocus disabled></td>
+								<td><input class="review_content" type="text" value="${comment.body}" autofocus disabled></td>
 								<td><c:if test="${comment.memberId == loginedMemberId}">
-										<span class="comment-modify-btn btn btn-sm">수정</span>
+										<input data-id="${comment.id }" style="float: left; width: 50%;" class="btn btn-sm edit" value="수정">
 										<a class="btn btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
 											href="../comment/doCommentDelete?articleId=${article.id }&commentId=${comment.id}">삭제</a>
-									</c:if> <br> <label>${comment.regDate.substring(0,10) }</label></td>
-								<td align="center">${comment.goodReactionPoint}</td>
+									</c:if> <br> <label>${comment.regDate.substring(0,10)}</label></td>
 							</tr>
 						</c:forEach>
 					</tbody>

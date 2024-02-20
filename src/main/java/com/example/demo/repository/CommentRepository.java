@@ -49,11 +49,9 @@ public interface CommentRepository {
 
 	@Update("""
 			UPDATE `comment`
-			<set>
-				<if test="body != null and body != ''">`body` = #{body},</if>
-				updateDate = NOW()
-			</set>
-			WHERE commentId = #{commentId}
+			SET `body` = #{body},
+			updateDate = NOW()
+			WHERE id = #{commentId}
 			AND articleId = #{articleId}
 			""")
 	public void modifyComment(int commentId, int articleId, String body);
