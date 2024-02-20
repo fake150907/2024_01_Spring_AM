@@ -267,53 +267,30 @@ $(document).ready(function() {
 						</form>
 					</div>
 				</div>
-				<table class="table-box-1 table" border="1">
+				<table class="table table-review" style="padding: 3em; height: 500px;">
 					<colgroup>
+						<col style="width: 0%" />
 						<col style="width: 10%" />
-						<col style="width: 10%" />
-						<col style="width: 40%" />
+						<col style="width: 60%" />
+						<col style="width: 20%" />
 						<col style="width: 10%" />
 					</colgroup>
-					<thead>
-						<tr>
-							<th>날짜</th>
-							<th>작성자</th>
-							<th>내용</th>
-							<th>수정, 삭제</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="comment" items="${comments }">
-							<tr class="hover">
-								<td>${comment.regDate.substring(0,10) }</td>
-								<td>${comment.extra__writer }</td>
-								<td>${comment.body }</td>
-								<td><c:if test="${comment.memberId == loginedMemberId}">
-										<span id="comment-modify-btn" class="btn btn-sm">수정</span>
-										<a class="btn btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-											href="../comment/doCommentDelete?articleId=${article.id }&commentId=${comment.id}">삭제</a>
-									</c:if></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-				<table class="table table-review" style="padding: 3em; height: 300px;">
 					<tbody>
 						<tr style="text-align: center;">
-							<th width="0%"></th>
-							<th width="15%">닉네임</th>
-							<th width="50%">리뷰내용</th>
-							<th width="15%">작성일</th>
-							<th width="10%">추천</th>
+							<th></th>
+							<th>닉네임</th>
+							<th>리뷰내용</th>
+							<th>작성일</th>
+							<th>추천</th>
 						</tr>
 						<c:forEach items="${comments }" var="comment">
 							<tr>
 								<td><input type="hidden" id="commentId" value="${comment.id }"> <input type="hidden" id="articleId"
 									value="${article.id }"></td>
 								<td>${comment.extra__writer}</td>
-								<td><input class="review_content" type="text" value="${comment.body}" autofocus disabled></td>
+								<td><input style="width: 60%" class="review_content" type="text" value="${comment.body}" autofocus disabled></td>
 								<td><c:if test="${comment.memberId == loginedMemberId}">
-										<input data-id="${comment.id }" style="float: left; width: 50%;" class="btn btn-sm edit" value="수정">
+										<input data-id="${comment.id }" style="float: left; width: 30%;" class="btn btn-sm edit" value="수정">
 										<a class="btn btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
 											href="../comment/doCommentDelete?articleId=${article.id }&commentId=${comment.id}">삭제</a>
 									</c:if> <br> <label>${comment.regDate.substring(0,10)}</label></td>
@@ -339,25 +316,26 @@ $(document).ready(function() {
 		<c:if test="${!isLogined }">
 			<details class="collapse bg-base-200">
 				<summary class="collapse-title text-xl font-medium">Comment(${comments.size() })</summary>
-				<table class="table-box-1 table" border="1">
-					<colgroup>
-						<col style="width: 10%" />
-						<col style="width: 10%" />
-						<col style="width: 30%" />
-					</colgroup>
-					<thead>
-						<tr>
-							<th>날짜</th>
-							<th>작성자</th>
-							<th>내용</th>
-						</tr>
-					</thead>
+				<table class="table table-review" style="padding: 3em; height: 300px;">
 					<tbody>
-						<c:forEach var="comment" items="${comments }">
-							<tr class="hover">
-								<td>${comment.regDate.substring(0,10) }</td>
-								<td>${comment.extra__writer }</td>
-								<td>${comment.body }</td>
+						<tr style="text-align: center;">
+							<th width="0%"></th>
+							<th width="15%">닉네임</th>
+							<th width="50%">리뷰내용</th>
+							<th width="15%">작성일</th>
+							<th width="10%">추천</th>
+						</tr>
+						<c:forEach items="${comments }" var="comment">
+							<tr>
+								<td><input type="hidden" id="commentId" value="${comment.id }"> <input type="hidden" id="articleId"
+									value="${article.id }"></td>
+								<td>${comment.extra__writer}</td>
+								<td><input class="review_content" type="text" value="${comment.body}" autofocus disabled></td>
+								<td><c:if test="${comment.memberId == loginedMemberId}">
+										<input data-id="${comment.id }" style="float: left; width: 50%;" class="btn btn-sm edit" value="수정">
+										<a class="btn btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
+											href="../comment/doCommentDelete?articleId=${article.id }&commentId=${comment.id}">삭제</a>
+									</c:if> <br> <label>${comment.regDate.substring(0,10)}</label></td>
 							</tr>
 						</c:forEach>
 					</tbody>
