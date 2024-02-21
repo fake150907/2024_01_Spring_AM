@@ -49,7 +49,6 @@ public class ReactionPointService {
 	// reactionPoint 테이블에 좋아요/싫어요 로그 기록 관련 메서드
 	public void addIncreasingGoodRpInfo(String relTypeCode, int relId, int memberId) {
 		// 현재 게시물이 소속된 게시판 id를 가져옴
-		int boardId = articleService.getBoardIdByArticle(relId);
 
 		switch (relTypeCode) {
 		case "article":
@@ -59,22 +58,46 @@ public class ReactionPointService {
 			commentService.increaseGoodRp(relId);
 			break;
 		}
-		reactionPointRepository.addIncreasingGoodRpInfo(relTypeCode, boardId, relId, memberId);
+		reactionPointRepository.addIncreasingGoodRpInfo(relTypeCode, relId, memberId);
 	}
 
-	public void deleteGoodRpInfo(String relTypeCode, int articleId, int memberId) {
-		int boardId = articleService.getBoardIdByArticle(articleId);
-		reactionPointRepository.deleteGoodRpInfo(relTypeCode, boardId, articleId, memberId);
+	public void deleteGoodRpInfo(String relTypeCode, int relId, int memberId) {
+		switch (relTypeCode) {
+		case "article":
+			articleService.decreaseGoodRp(relId);
+			break;
+		case "comment":
+			commentService.decreaseGoodRp(relId);
+			break;
+		}
+		reactionPointRepository.deleteGoodRpInfo(relTypeCode, relId, memberId);
 	}
 
-	public void addIncreasingBadRpInfo(String relTypeCode, int articleId, int memberId) {
-		int boardId = articleService.getBoardIdByArticle(articleId);
-		reactionPointRepository.addIncreasingBadRpInfo(relTypeCode, boardId, articleId, memberId);
+	public void addIncreasingBadRpInfo(String relTypeCode, int relId, int memberId) {
+		// 현재 게시물이 소속된 게시판 id를 가져옴
+
+		switch (relTypeCode) {
+		case "article":
+			articleService.increaseBadRp(relId);
+			break;
+		case "comment":
+			commentService.increaseBadRp(relId);
+			break;
+		}
+
+		reactionPointRepository.addIncreasingBadRpInfo(relTypeCode, relId, memberId);
 	}
 
-	public void deleteBadRpInfo(String relTypeCode, int articleId, int memberId) {
-		int boardId = articleService.getBoardIdByArticle(articleId);
-		reactionPointRepository.deleteBadRpInfo(relTypeCode, boardId, articleId, memberId);
+	public void deleteBadRpInfo(String relTypeCode, int relId, int memberId) {
+		switch (relTypeCode) {
+		case "article":
+			articleService.decreaseBadRp(relId);
+			break;
+		case "comment":
+			commentService.decreaseBadRp(relId);
+			break;
+		}
+		reactionPointRepository.deleteBadRpInfo(relTypeCode, relId, memberId);
 	}
 
 	public boolean isAlreadyAddGoodRp(int memberId, int commentId, String relTypeCode) {

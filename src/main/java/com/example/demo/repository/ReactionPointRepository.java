@@ -13,60 +13,56 @@ public interface ReactionPointRepository {
 			SET regDate = NOW(),
 			updateDate =
 			NOW(),
-			boardId = #{boardId},
-			articleId = #{articleId},
+			relId = #{relId},
 			memberId = #{memberId},
 			relTypeCode = #{relTypeCode},
 			`point` = 1
 			""")
-	public void addIncreasingGoodRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
+	public void addIncreasingGoodRpInfo(String relTypeCode, int relId, int memberId);
 
 	@Delete("""
 			DELETE FROM reactionPoint
-			WHERE boardId = #{boardId}
-			AND articleId = #{articleId}
+			WHERE relId = #{relId}
 			AND memberId = #{memberId}
 			AND `point` = 1
 			AND relTypeCode = #{relTypeCode}
 			""")
-	public void deleteGoodRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
+	public void deleteGoodRpInfo(String relTypeCode, int relId, int memberId);
 
 	@Insert("""
 			INSERT INTO reactionPoint
 			SET regDate = NOW(),
 			updateDate =
 			NOW(),
-			boardId = #{boardId},
-			articleId = #{articleId},
+			relId = #{relId},
 			memberId = #{memberId},
 			relTypeCode = #{relTypeCode},
 			`point` = -1
 			""")
-	public void addIncreasingBadRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
+	public void addIncreasingBadRpInfo(String relTypeCode, int relId, int memberId);
 
 	@Delete("""
 			DELETE FROM reactionPoint
-			WHERE boardId = #{boardId}
-			AND articleId = #{articleId}
+			WHERE relId = #{relId}
 			AND memberId = #{memberId}
 			AND `point` = -1
 			AND relTypeCode = #{relTypeCode}
 			""")
-	public void deleteBadRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
+	public void deleteBadRpInfo(String relTypeCode, int relId, int memberId);
 
 	@Select("""
 			SELECT `point`
 			FROM reactionPoint
-			WHERE articleId = #{articleId} AND memberId = #{memberId};
+			WHERE relId = #{relId} AND memberId = #{memberId};
 			""")
-	public Integer getRpInfoByMemberId(int articleId, int memberId);
+	public Integer getRpInfoByMemberId(int relId, int memberId);
 
 	@Select("""
 			SELECT IFNULL(SUM(RP.point),0)
 			FROM reactionPoint AS RP
 			WHERE RP.relTypeCode = #{relTypeCode}
-			AND RP.id = #{commentId}
+			AND RP.relId = #{relId}
 			AND RP.memberId = #{memberId}
 			""")
-	public int getSumReactionPoint(int memberId, String relTypeCode, int commentId);
+	public int getSumReactionPoint(int memberId, String relTypeCode, int relId);
 }

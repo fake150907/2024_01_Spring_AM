@@ -19,7 +19,6 @@ public class UsrReactionPointController {
 	@ResponseBody
 	public int increaseGoodRp(String relTypeCode, int id) {
 		// article 테이블에서 해당 게시물의 좋아요 1 증가
-		reactionPointService.increaseGoodRp(id);
 		// article 테이블에서 해당 게시물의 최신화된 좋아요 수 불러오기
 		int goodRp = reactionPointService.getGoodRpCount(id);
 
@@ -33,7 +32,6 @@ public class UsrReactionPointController {
 	@ResponseBody
 	public int decreaseGoodRp(String relTypeCode, int id) {
 		// article 테이블에서 해당 게시물의 좋아요 1 감소
-		reactionPointService.decreaseGoodRp(id);
 		// article 테이블에서 해당 게시물의 최신화된 좋아요 수 불러오기
 		int goodRp = reactionPointService.getGoodRpCount(id);
 
@@ -46,7 +44,6 @@ public class UsrReactionPointController {
 	@RequestMapping("/usr/reactionPoint/increaseBadRp")
 	@ResponseBody
 	public int increaseBadRp(String relTypeCode, int id) {
-		reactionPointService.increaseBadRp(id);
 		int badRp = reactionPointService.getBadRpCount(id);
 
 		reactionPointService.addIncreasingBadRpInfo(relTypeCode, id, (int) rq.getLoginedMemberId());
@@ -57,7 +54,6 @@ public class UsrReactionPointController {
 	@RequestMapping("/usr/reactionPoint/decreaseBadRp")
 	@ResponseBody
 	public int decreaseBadRp(String relTypeCode, int id) {
-		reactionPointService.decreaseBadRp(id);
 		int badRp = reactionPointService.getBadRpCount(id);
 
 		reactionPointService.deleteBadRpInfo(relTypeCode, id, (int) rq.getLoginedMemberId());

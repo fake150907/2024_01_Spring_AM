@@ -41,9 +41,9 @@
 	function checkAddRpBefore() {
     <!-- 변수값에 따라 각 id가 부여된 버튼에 클래스 추가(이미 눌려있다는 색상 표시) -->
 		if (isAlreadyAddGoodRp == true) {
-			$("#add-goodRp-btn").addClass("already-added");
+			$("#add-article-goodRp-btn").addClass("already-added");
 		} else if (isAlreadyAddBadRp == true) {
-			$("#add-badRp-btn").addClass("already-added");
+			$("#add-article-badRp-btn").addClass("already-added");
 		} else {
 			return;
 		}
@@ -72,7 +72,7 @@
 		});
         
         <!-- 좋아요 버튼 클릭 이벤트 및 ajax 실행 -->
-		$("#add-goodRp-btn,#add-heart-btn").click(function() {
+		$("#add-article-goodRp-btn,#add-article-heart-btn").click(function() {
 			
             <!-- 이미 싫어요가 눌려 있는 경우 반려 -->
             if (isAlreadyAddBadRp == true) {
@@ -87,10 +87,10 @@
 					type : "POST",
 					data : { relTypeCode: 'article', id : params.id },
 					success : function(goodReactionPoint) {
-						$("#add-goodRp-btn").addClass("already-added");
-						$("#add-heart-btn").addClass("already-added");
-						$(".add-goodRp").html(goodReactionPoint);
-						$(".add-heart").html(goodReactionPoint);
+						$("#add-article-goodRp-btn").addClass("already-added");
+						$("#add-article-heart-btn").addClass("already-added");
+						$(".add-article-goodRp").html(goodReactionPoint);
+						$(".add-article-heart").html(goodReactionPoint);
 						isAlreadyAddGoodRp = true;
 					},
 					error : function() {
@@ -105,10 +105,10 @@
 					type : "POST",
 					data : { relTypeCode: 'article', id : params.id },
 					success : function(goodReactionPoint) {
-						$("#add-goodRp-btn").removeClass("already-added");
-						$("#add-heart-btn").removeClass("already-added");
-						$(".add-goodRp").html(goodReactionPoint);
-						$(".add-heart").html(goodReactionPoint);
+						$("#add-article-goodRp-btn").removeClass("already-added");
+						$("#add-article-heart-btn").removeClass("already-added");
+						$(".add-article-goodRp").html(goodReactionPoint);
+						$(".add-article-heart").html(goodReactionPoint);
 						isAlreadyAddGoodRp = false;
 					},
 					error : function() {
@@ -136,8 +136,8 @@
 					type : "POST",
 					data : { relTypeCode: 'article', id : params.id },
 					success : function(badReactionPoint) {
-						$("#add-badRp-btn").addClass("already-added");
-						$(".add-badRp").html(badReactionPoint);
+						$("#add-article-badRp-btn").addClass("already-added");
+						$(".add-article-badRp").html(badReactionPoint);
 						isAlreadyAddBadRp = true;
 					},
 					error : function() {
@@ -152,8 +152,8 @@
 					type : "POST",
 					data : { relTypeCode: 'article', id : params.id },
 					success : function(badReactionPoint) {
-						$("#add-badRp-btn").removeClass("already-added");
-						$(".add-badRp").html(badReactionPoint);
+						$("#add-article-badRp-btn").removeClass("already-added");
+						$(".add-article-badRp").html(badReactionPoint);
 						isAlreadyAddBadRp = false;
 					},
 					error : function() {
@@ -300,17 +300,17 @@ $(document).ready(function() {
 				</table>
 			</details>
 
-			<span id="add-goodRp-btn" class="btn btn-outline">
+			<span id="add-article-goodRp-btn" class="btn btn-outline">
 				좋아요👍
-				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>
+				<span class="add-article-goodRp ml-2">${article.goodReactionPoint}</span>
 			</span>
-			<span id="add-badRp-btn" class="ml-5 btn btn-outline">
+			<span id="add-article-badRp-btn" class="ml-5 btn btn-outline">
 				싫어요👎
-				<span class="add-badRp ml-2">${article.badReactionPoint}</span>
+				<span class="add-article-badRp ml-2">${article.badReactionPoint}</span>
 			</span>
-			<span id="add-heart-btn" class="btn btn-outline">
+			<span id="add-article-heart-btn" class="btn btn-outline">
 				❤️
-				<span class="add-heart ml-2">${article.goodReactionPoint}</span>
+				<span class="add-article-heart ml-2">${article.goodReactionPoint}</span>
 			</span>
 		</c:if>
 		<c:if test="${!isLogined }">
@@ -332,9 +332,6 @@ $(document).ready(function() {
 								<td>${comment.extra__writer}</td>
 								<td><input class="review_content" type="text" value="${comment.body}" autofocus disabled></td>
 								<td><c:if test="${comment.memberId == loginedMemberId}">
-										<input data-id="${comment.id }" style="float: left; width: 50%;" class="btn btn-sm edit" value="수정">
-										<a class="btn btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-											href="../comment/doCommentDelete?articleId=${article.id }&commentId=${comment.id}">삭제</a>
 									</c:if> <br> <label>${comment.regDate.substring(0,10)}</label></td>
 							</tr>
 						</c:forEach>
@@ -343,15 +340,15 @@ $(document).ready(function() {
 			</details>
 			<span id="request-login-good" class="btn btn-outline">
 				좋아요👍
-				<span class="add-goodRp ml-2">${article.goodReactionPoint}</span>
+				<span class="add-article-goodRp ml-2">${article.goodReactionPoint}</span>
 			</span>
 			<span id="request-login-bad" class="ml-5 btn btn-outline">
 				싫어요👎
-				<span class="add-badRp ml-2">${article.badReactionPoint}</span>
+				<span class="add-article-badRp ml-2">${article.badReactionPoint}</span>
 			</span>
 			<span id="request-login-good" class="btn btn-outline">
 				❤️
-				<span class="add-heart ml-2">${article.goodReactionPoint}</span>
+				<span class="add-article-heart ml-2">${article.goodReactionPoint}</span>
 			</span>
 		</c:if>
 		<div class="btns mt-5">
