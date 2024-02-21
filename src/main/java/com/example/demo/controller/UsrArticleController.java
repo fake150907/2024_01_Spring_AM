@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
+import com.example.demo.service.CommentService;
 import com.example.demo.service.ReactionPointService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
+import com.example.demo.vo.Comment;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
 
@@ -36,6 +38,8 @@ public class UsrArticleController {
 	private ReactionPointService reactionPointService;
 	@Autowired
 	private UsrCommentController usrCommentController;
+	@Autowired
+	private CommentService commentService;
 
 	public UsrArticleController() {
 
@@ -86,7 +90,6 @@ public class UsrArticleController {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-
 		model.addAttribute("article", article);
 		model.addAttribute("isLogined", rq.isLogined());
 		model.addAttribute("isAlreadyAddArticleGoodRp",
