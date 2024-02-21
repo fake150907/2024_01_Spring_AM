@@ -65,4 +65,53 @@ public interface CommentRepository {
 			""")
 	public Comment getForPrintComment(int commentId);
 
+	@Update("""
+			UPDATE comment
+			SET goodReactionPoint = goodReactionPoint + 1
+			WHERE id = #{id}
+			""")
+	public void increaseGoodRp(int id);
+
+	@Update("""
+			UPDATE comment
+			SET badReactionPoint = badReactionPoint + 1
+			WHERE id = #{id}
+			""")
+	public void increaseBadRp(int id);
+
+	@Update("""
+			UPDATE comment
+			SET goodReactionPoint = goodReactionPoint - 1
+			WHERE id = #{id}
+			""")
+	public void decreaseGoodRp(int id);
+
+	@Update("""
+			UPDATE comment
+			SET badReactionPoint = badReactionPoint - 1
+			WHERE id = #{id}
+			""")
+	public void decreaseBadRp(int id);
+
+	@Select("""
+			SELECT goodReactionPoint
+			FROM comment
+			WHERE id = #{id}
+			""")
+	public int getGoodRpCount(int id);
+
+	@Select("""
+			SELECT badReactionPoint
+			FROM comment
+			WHERE id = #{id}
+			""")
+	public int getBadRqCount(int id);
+
+	@Select("""
+			SELECT A.boardId
+			FROM comment AS A
+			WHERE id = #{commentId}
+			""")
+	public int getBoardIdByComment(int commentId);
+
 }

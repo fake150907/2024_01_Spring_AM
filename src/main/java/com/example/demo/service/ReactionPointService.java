@@ -18,6 +18,9 @@ public class ReactionPointService {
 	@Autowired
 	private Rq rq;
 
+	@Autowired
+	private CommentService commentService;
+
 	// detail.jsp의 ajax 관련 메서드(article 테이블에 진입해야 하므로 articleService로 넘김)
 	public void increaseGoodRp(int id) {
 		articleService.increaseGoodRp(id);
@@ -44,10 +47,19 @@ public class ReactionPointService {
 	}
 
 	// reactionPoint 테이블에 좋아요/싫어요 로그 기록 관련 메서드
-	public void addIncreasingGoodRpInfo(String relTypeCode, int articleId, int memberId) {
+	public void addIncreasingGoodRpInfo(String relTypeCode, int relId, int memberId) {
 		// 현재 게시물이 소속된 게시판 id를 가져옴
-		int boardId = articleService.getBoardIdByArticle(articleId);
-		reactionPointRepository.addIncreasingGoodRpInfo(relTypeCode, boardId, articleId, memberId);
+		int boardId = articleService.getBoardIdByArticle(relId);
+
+		switch (relTypeCode) {
+		case "article":
+			articleService.increaseGoodRp(relId);
+			break;
+		case "comment":
+			commentService.increaseGoodRp(relId);
+			break;
+		}
+		reactionPointRepository.addIncreasingGoodRpInfo(relTypeCode, boardId, relId, memberId);
 	}
 
 	public void deleteGoodRpInfo(String relTypeCode, int articleId, int memberId) {
@@ -65,36 +77,23 @@ public class ReactionPointService {
 		reactionPointRepository.deleteBadRpInfo(relTypeCode, boardId, articleId, memberId);
 	}
 
-	public boolean isAlreadyAddGoodRp(int articleId) {
-		// 좋아요 = 1, 싫어요 = 2, 취소 시 데이터 삭제
-		// 현재 게시물에서, loginedMemberId의 pointTypeCode값이 1이면 좋아요 상태
-		int getPointTypeCodeByMemberId = getRpInfoByMemberId(articleId, rq.getLoginedMemberId());
+	public boolean isAlreadyAddGoodRp(int memberId, int commentId, String relTypeCode) {
+		int getPointTypeCodeByMemberId = reactionPointRepository.getSumReactionPoint(memberId, relTypeCode, commentId);
 
-		if (getPointTypeCodeByMemberId == 1) {
+		if (getPointTypeCodeByMemberId > 0) {
 			return true;
 		}
+
 		return false;
 	}
 
-	public boolean isAlreadyAddBadRp(int articleId) {
-		// 좋아요 = 1, 싫어요 = 2, 취소 시 데이터 삭제
-		// 현재 게시물에서, loginedMemberId의 pointTypeCode값이 2면 좋아요 상태
-		int getPointTypeCodeByMemberId = getRpInfoByMemberId(articleId, rq.getLoginedMemberId());
+	public boolean isAlreadyAddBadRp(int memberId, int commentId, String relTypeCode) {
+		int getPointTypeCodeByMemberId = reactionPointRepository.getSumReactionPoint(memberId, relTypeCode, commentId);
 
-		if (getPointTypeCodeByMemberId == 2) {
+		if (getPointTypeCodeByMemberId < 0) {
 			return true;
 		}
+
 		return false;
-	}
-
-	private Integer getRpInfoByMemberId(int articleId, int memberId) {
-		// 현재 사용자 id와 게시물 id로 좋아요/싫어요 기록을 가져옴
-		Integer getPointTypeCodeByMemberId = reactionPointRepository.getRpInfoByMemberId(articleId, memberId);
-		// 로그인 상태가 아닐 경우, null 에러를 방지하기 위해 임의로 99값을 부여
-		if (getPointTypeCodeByMemberId == null) {
-			getPointTypeCodeByMemberId = 99;
-		}
-
-		return (int) getPointTypeCodeByMemberId;
 	}
 }

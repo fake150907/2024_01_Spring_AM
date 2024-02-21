@@ -17,7 +17,7 @@ public interface ReactionPointRepository {
 			articleId = #{articleId},
 			memberId = #{memberId},
 			relTypeCode = #{relTypeCode},
-			pointTypeCode = 1
+			`point` = 1
 			""")
 	public void addIncreasingGoodRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
 
@@ -26,7 +26,7 @@ public interface ReactionPointRepository {
 			WHERE boardId = #{boardId}
 			AND articleId = #{articleId}
 			AND memberId = #{memberId}
-			AND pointTypeCode = 1
+			AND `point` = 1
 			AND relTypeCode = #{relTypeCode}
 			""")
 	public void deleteGoodRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
@@ -40,7 +40,7 @@ public interface ReactionPointRepository {
 			articleId = #{articleId},
 			memberId = #{memberId},
 			relTypeCode = #{relTypeCode},
-			pointTypeCode = 2
+			`point` = -1
 			""")
 	public void addIncreasingBadRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
 
@@ -49,15 +49,24 @@ public interface ReactionPointRepository {
 			WHERE boardId = #{boardId}
 			AND articleId = #{articleId}
 			AND memberId = #{memberId}
-			AND pointTypeCode = 2
+			AND `point` = -1
 			AND relTypeCode = #{relTypeCode}
 			""")
 	public void deleteBadRpInfo(String relTypeCode, int boardId, int articleId, int memberId);
 
 	@Select("""
-			SELECT pointTypeCode
+			SELECT `point`
 			FROM reactionPoint
 			WHERE articleId = #{articleId} AND memberId = #{memberId};
 			""")
 	public Integer getRpInfoByMemberId(int articleId, int memberId);
+
+	@Select("""
+			SELECT IFNULL(SUM(RP.point),0)
+			FROM reactionPoint AS RP
+			WHERE RP.relTypeCode = #{relTypeCode}
+			AND RP.id = #{commentId}
+			AND RP.memberId = #{memberId}
+			""")
+	public int getSumReactionPoint(int memberId, String relTypeCode, int commentId);
 }

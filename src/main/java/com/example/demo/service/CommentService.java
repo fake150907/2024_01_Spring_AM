@@ -78,5 +78,34 @@ public class CommentService {
 
 		return ResultData.from("S-1", Ut.f("%d번 댓글이 수정했습니다", comment.getId()));
 	}
+	
+	public void increaseGoodRp(int id) {
+		commentRepository.increaseGoodRp(id);
+	}
+
+	public void increaseBadRp(int id) {
+		commentRepository.increaseBadRp(id);
+	}
+
+	public void decreaseGoodRp(int id) {
+		commentRepository.decreaseGoodRp(id);
+	}
+
+	public void decreaseBadRp(int id) {
+		commentRepository.decreaseBadRp(id);
+	}
+
+	public int getGoodRpCount(int id) {
+
+		return commentRepository.getGoodRpCount(id);
+	}
+
+	public int getBadRpCount(int id) {
+		return commentRepository.getBadRqCount(id);
+	}
+
+	public int getBoardIdByArticle(int commentId) {
+		return commentRepository.getBoardIdByComment(commentId);
+	}
 
 }

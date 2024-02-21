@@ -89,8 +89,10 @@ public class UsrArticleController {
 
 		model.addAttribute("article", article);
 		model.addAttribute("isLogined", rq.isLogined());
-		model.addAttribute("isAlreadyAddGoodRp", reactionPointService.isAlreadyAddGoodRp(id));
-		model.addAttribute("isAlreadyAddBadRp", reactionPointService.isAlreadyAddBadRp(id));
+		model.addAttribute("isAlreadyAddGoodRp",
+				reactionPointService.isAlreadyAddGoodRp(rq.getLoginedMemberId(), id, "article"));
+		model.addAttribute("isAlreadyAddBadRp",
+				reactionPointService.isAlreadyAddBadRp(rq.getLoginedMemberId(), id, "article"));
 		model.addAttribute("comments", usrCommentController.showCommentList(req, model, id));
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 
