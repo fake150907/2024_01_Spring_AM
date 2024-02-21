@@ -9,8 +9,10 @@
 	const params = {};
 	params.id = parseInt('${param.id}');
 
-	var isAlreadyAddGoodRp = ${isAlreadyAddGoodRp};
-	var isAlreadyAddBadRp = ${isAlreadyAddBadRp};
+	var isAlreadyAddArticleGoodRp = ${isAlreadyAddArticleGoodRp};
+	var isAlreadyAddArticleBadRp = ${isAlreadyAddArticleBadRp};
+	var isAlreadyAddCommentGoodRp = ${isAlreadyAddCommentGoodRp};
+	var isAlreadyAddCommentBadRp = ${isAlreadyAddCommentBadRp};
 </script>
 
 <script>
@@ -37,12 +39,149 @@
 	})
 </script>
 
+<!-- 게시글 좋아요 싫어요 기능 -->
+
 <script>
 	function checkAddRpBefore() {
     <!-- 변수값에 따라 각 id가 부여된 버튼에 클래스 추가(이미 눌려있다는 색상 표시) -->
-		if (isAlreadyAddGoodRp == true) {
+		if (isAlreadyAddArticleGoodRp == true) {
 			$("#add-article-goodRp-btn").addClass("already-added");
-		} else if (isAlreadyAddBadRp == true) {
+		} else if (isAlreadyAddArticleBadRp == true) {
+			$("#add-article-badRp-btn").addClass("already-added");
+		} else {
+			return;
+		}
+		$(function() {
+			checkAddRpBefore();
+		});
+	};
+</script>
+
+<!-- 리액션 실행 코드 -->
+<script>
+	$(document).ready(function() {
+		<!-- 각 id가 부여된 버튼 클릭 시 로그인 요청 메시지 발송 -->
+        $("#request-login-good").click(function() {
+			alert('로그인 후 이용해주세요!');
+			return;
+		});
+		$("#request-login-bad").click(function() {
+			alert('로그인 후 이용해주세요!');
+			return;
+		});
+        
+        <!-- jsp 실행 이전의 리액션 여부 체크 및 버튼 색상 표현 -->
+		$(function() {
+			checkAddRpBefore();
+		});
+        
+        <!-- 좋아요 버튼 클릭 이벤트 및 ajax 실행 -->
+		$("#add-comment-goodRp-btn,#add-comment-heart-btn").click(function() {
+			
+            <!-- 이미 싫어요가 눌려 있는 경우 반려 -->
+            if (isAlreadyAddCommentBadRp == true) {
+				alert('이미 싫어요를 누르셨습니다.');
+				return;
+			}
+            
+            <!-- 좋아요가 눌려 있지 않은 경우 좋아요 1 추가 -->
+			if (isAlreadyAddCommentGoodRp == false) {
+				$.ajax({
+					url : "/usr/reactionPoint/increaseGoodRp",
+					type : "POST",
+					data : { relTypeCode: 'article', id : params.id },
+					success : function(goodReactionPoint) {
+						$("#add-comment-goodRp-btn").addClass("already-added");
+						$("#add-comment-heart-btn").addClass("already-added");
+						$(".add-comment-goodRp").html(goodReactionPoint);
+						$(".add-comment-heart").html(goodReactionPoint);
+						isAlreadyAddCommentGoodRp = true;
+					},
+					error : function() {
+						alert('서버 에러, 다시 시도해주세요.');
+					}
+				});
+                
+              <!-- 이미 좋아요가 눌려 있는 경우 좋아요 1 감소 -->  
+			} else if (isAlreadyAddCommentGoodRp == true){
+				$.ajax({
+					url : "/usr/reactionPoint/decreaseGoodRp",
+					type : "POST",
+					data : { relTypeCode: 'article', id : params.id },
+					success : function(goodReactionPoint) {
+						$("#add-comment-goodRp-btn").removeClass("already-added");
+						$("#add-comment-heart-btn").removeClass("already-added");
+						$(".add-comment-goodRp").html(goodReactionPoint);
+						$(".add-comment-heart").html(goodReactionPoint);
+						isAlreadyAddCommentGoodRp = false;
+					},
+					error : function() {
+						alert('서버 에러, 다시 시도해주세요.');
+					}
+				});
+			} else {
+				return;
+			}
+		});
+        
+        <!-- 싫어요 버튼 클릭 이벤트 및 ajax 실행 -->
+		$("#add-badRp-btn").click(function() {
+			
+            <!-- 이미 좋아요가 눌려 있는 경우 반려 -->
+            if (isAlreadyAddCommentGoodRp == true) {
+				alert('이미 좋아요를 누르셨습니다.');
+				return;
+			}
+            
+            <!-- 싫어요가 눌려 있지 않은 경우 싫어요 1 추가 -->
+			if (isAlreadyAddCommentBadRp == false) {
+				$.ajax({
+					url : "/usr/reactionPoint/increaseBadRp",
+					type : "POST",
+					data : { relTypeCode: 'article', id : params.id },
+					success : function(badReactionPoint) {
+						$("#add-comment-badRp-btn").addClass("already-added");
+						$(".add-comment-badRp").html(badReactionPoint);
+						isAlreadyAddCommentBadRp = true;
+					},
+					error : function() {
+						alert('서버 에러, 다시 시도해주세요.');
+					}
+				});
+                
+              <!-- 이미 싫어요가 눌려 있는 경우 싫어요 1 감소 --> 
+			} else if (isAlreadyAddCommentBadRp == true) {
+				$.ajax({
+					url : "/usr/reactionPoint/decreaseBadRp",
+					type : "POST",
+					data : { relTypeCode: 'article', id : params.id },
+					success : function(badReactionPoint) {
+						$("#add-comment-badRp-btn").removeClass("already-added");
+						$(".add-comment-badRp").html(badReactionPoint);
+						isAlreadyAddCommentBadRp = false;
+					},
+					error : function() {
+						alert('서버 에러, 다시 시도해주세요.');
+					}
+				});
+			} else {
+				return;
+			}
+		});
+		
+	});		
+	
+	    
+	    
+</script>
+
+<!-- 댓글 좋아요 싫어요 기능 -->
+<script>
+	function checkAddRpBefore() {
+    <!-- 변수값에 따라 각 id가 부여된 버튼에 클래스 추가(이미 눌려있다는 색상 표시) -->
+		if (isAlreadyAddArticleGoodRp == true) {
+			$("#add-article-goodRp-btn").addClass("already-added");
+		} else if (isAlreadyAddArticleBadRp == true) {
 			$("#add-article-badRp-btn").addClass("already-added");
 		} else {
 			return;
@@ -75,13 +214,13 @@
 		$("#add-article-goodRp-btn,#add-article-heart-btn").click(function() {
 			
             <!-- 이미 싫어요가 눌려 있는 경우 반려 -->
-            if (isAlreadyAddBadRp == true) {
+            if (isAlreadyAddArticleBadRp == true) {
 				alert('이미 싫어요를 누르셨습니다.');
 				return;
 			}
             
             <!-- 좋아요가 눌려 있지 않은 경우 좋아요 1 추가 -->
-			if (isAlreadyAddGoodRp == false) {
+			if (isAlreadyAddArticleGoodRp == false) {
 				$.ajax({
 					url : "/usr/reactionPoint/increaseGoodRp",
 					type : "POST",
@@ -91,7 +230,7 @@
 						$("#add-article-heart-btn").addClass("already-added");
 						$(".add-article-goodRp").html(goodReactionPoint);
 						$(".add-article-heart").html(goodReactionPoint);
-						isAlreadyAddGoodRp = true;
+						isAlreadyAddArticleGoodRp = true;
 					},
 					error : function() {
 						alert('서버 에러, 다시 시도해주세요.');
@@ -99,7 +238,7 @@
 				});
                 
               <!-- 이미 좋아요가 눌려 있는 경우 좋아요 1 감소 -->  
-			} else if (isAlreadyAddGoodRp == true){
+			} else if (isAlreadyAddArticleGoodRp == true){
 				$.ajax({
 					url : "/usr/reactionPoint/decreaseGoodRp",
 					type : "POST",
@@ -109,7 +248,7 @@
 						$("#add-article-heart-btn").removeClass("already-added");
 						$(".add-article-goodRp").html(goodReactionPoint);
 						$(".add-article-heart").html(goodReactionPoint);
-						isAlreadyAddGoodRp = false;
+						isAlreadyAddArticleGoodRp = false;
 					},
 					error : function() {
 						alert('서버 에러, 다시 시도해주세요.');
@@ -124,13 +263,13 @@
 		$("#add-badRp-btn").click(function() {
 			
             <!-- 이미 좋아요가 눌려 있는 경우 반려 -->
-            if (isAlreadyAddGoodRp == true) {
+            if (isAlreadyAddArticleGoodRp == true) {
 				alert('이미 좋아요를 누르셨습니다.');
 				return;
 			}
             
             <!-- 싫어요가 눌려 있지 않은 경우 싫어요 1 추가 -->
-			if (isAlreadyAddBadRp == false) {
+			if (isAlreadyAddArticleBadRp == false) {
 				$.ajax({
 					url : "/usr/reactionPoint/increaseBadRp",
 					type : "POST",
@@ -138,7 +277,7 @@
 					success : function(badReactionPoint) {
 						$("#add-article-badRp-btn").addClass("already-added");
 						$(".add-article-badRp").html(badReactionPoint);
-						isAlreadyAddBadRp = true;
+						isAlreadyAddArticleBadRp = true;
 					},
 					error : function() {
 						alert('서버 에러, 다시 시도해주세요.');
@@ -146,7 +285,7 @@
 				});
                 
               <!-- 이미 싫어요가 눌려 있는 경우 싫어요 1 감소 --> 
-			} else if (isAlreadyAddBadRp == true) {
+			} else if (isAlreadyAddArticleBadRp == true) {
 				$.ajax({
 					url : "/usr/reactionPoint/decreaseBadRp",
 					type : "POST",
@@ -154,7 +293,7 @@
 					success : function(badReactionPoint) {
 						$("#add-article-badRp-btn").removeClass("already-added");
 						$(".add-article-badRp").html(badReactionPoint);
-						isAlreadyAddBadRp = false;
+						isAlreadyAddArticleBadRp = false;
 					},
 					error : function() {
 						alert('서버 에러, 다시 시도해주세요.');
@@ -170,6 +309,7 @@
 	    
 	    
 </script>
+
 
 <script>
 $(document).ready(function() {
