@@ -52,10 +52,9 @@ CREATE TABLE reactionPoint(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-	boardId INT(10) UNSIGNED NOT NULL,
-	articleId INT(10) UNSIGNED NOT NULL,
+	relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
 	memberId INT(10) UNSIGNED NOT NULL,
-	pointTypeCode INT(10) UNSIGNED NOT NULL
+	`point` INT(10) NOT NULL
 );
 ALTER TABLE reactionPoint ADD COLUMN relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드';
 
@@ -98,6 +97,17 @@ DESC `member`;
 
 DESC reactionPoint;
 
+SELECT C.*, M.nickname AS extra__writer
+			FROM `comment` AS C
+			INNER JOIN `member` AS M
+			ON C.memberId = M.id
+			WHERE articleId = 1
+			ORDER BY C.id DESC;
+SELECT IFNULL(SUM(RP.`point`),0)
+			FROM reactionPoint AS RP
+			WHERE RP.relTypeCode = 'comment'
+			AND RP.relId = 2
+			AND RP.memberId = 1;
 ##############################################
 # board 테이블에 데이터 넣기.
 INSERT INTO board
@@ -215,7 +225,7 @@ ORDER BY id DESC;
 
 SELECT LAST_INSERT_ID();
 
-DESC article;
+desc article;
 
 ##########################################
 # member 테이블 데이터 INSERT

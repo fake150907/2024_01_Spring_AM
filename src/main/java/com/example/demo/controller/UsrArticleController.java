@@ -90,16 +90,22 @@ public class UsrArticleController {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+
+		boolean isAlreadyAddArticleGoodRp = reactionPointService.isAlreadyAddGoodRp(rq.getLoginedMemberId(), id,
+				"article");
+		boolean isAlreadyAddArticleBadRp = reactionPointService.isAlreadyAddBadRp(rq.getLoginedMemberId(), id,
+				"article");
+		boolean isAlreadyAddCommentGoodRp = reactionPointService.isAlreadyAddGoodRp(rq.getLoginedMemberId(), id,
+				"comment");
+		boolean isAlreadyAddCommentBadRp = reactionPointService.isAlreadyAddBadRp(rq.getLoginedMemberId(), id,
+				"comment");
+
 		model.addAttribute("article", article);
 		model.addAttribute("isLogined", rq.isLogined());
-		model.addAttribute("isAlreadyAddArticleGoodRp",
-				reactionPointService.isAlreadyAddGoodRp(rq.getLoginedMemberId(), id, "article"));
-		model.addAttribute("isAlreadyAddArticleBadRp",
-				reactionPointService.isAlreadyAddBadRp(rq.getLoginedMemberId(), id, "article"));
-		model.addAttribute("isAlreadyAddCommentGoodRp",
-				reactionPointService.isAlreadyAddGoodRp(rq.getLoginedMemberId(), id, "comment"));
-		model.addAttribute("isAlreadyAddCommentBadRp",
-				reactionPointService.isAlreadyAddBadRp(rq.getLoginedMemberId(), id, "comment"));
+		model.addAttribute("isAlreadyAddArticleGoodRp", isAlreadyAddArticleGoodRp);
+		model.addAttribute("isAlreadyAddArticleBadRp", isAlreadyAddArticleBadRp);
+		model.addAttribute("isAlreadyAddCommentGoodRp", isAlreadyAddCommentGoodRp);
+		model.addAttribute("isAlreadyAddCommentBadRp", isAlreadyAddCommentBadRp);
 		model.addAttribute("comments", usrCommentController.showCommentList(req, model, id));
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 

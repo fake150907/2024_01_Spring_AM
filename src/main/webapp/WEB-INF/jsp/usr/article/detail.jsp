@@ -51,9 +51,6 @@
 		} else {
 			return;
 		}
-		$(function() {
-			checkAddRpBefore();
-		});
 	};
 </script>
 
@@ -72,7 +69,7 @@
         
         <!-- jsp 실행 이전의 리액션 여부 체크 및 버튼 색상 표현 -->
 		$(function() {
-			checkAddRpBefore();
+			checkAddArticleRpBefore();
 		});
         
         <!-- 좋아요 버튼 클릭 이벤트 및 ajax 실행 -->
@@ -177,24 +174,21 @@
 
 <!-- 댓글 좋아요 싫어요 기능 -->
 <script>
-	function checkAddCommentRpBefore() {
+
+function checkAddCommentRpBefore() {
     <!-- 변수값에 따라 각 id가 부여된 버튼에 클래스 추가(이미 눌려있다는 색상 표시) -->
-		if (isAlreadyAddCommnetGoodRp == true) {
+		if (isAlreadyAddCommentGoodRp == true) {
 			$("#add-comment-goodRp-btn").addClass("already-added");
-		} else if (isAlreadyAddCommnetBadRp == true) {
+		} else if (isAlreadyAddCommentBadRp == true) {
 			$("#add-comment-badRp-btn").addClass("already-added");
 		} else {
 			return;
 		}
-		$(function() {
-			checkAddRpBefore();
-		});
 	};
-</script>
 
-<!-- 리액션 실행 코드 -->
-<script>
 	$(document).ready(function() {
+		
+		
 		<!-- 각 id가 부여된 버튼 클릭 시 로그인 요청 메시지 발송 -->
         $("#request-login-good").click(function() {
 			alert('로그인 후 이용해주세요!');
@@ -207,30 +201,39 @@
         
         <!-- jsp 실행 이전의 리액션 여부 체크 및 버튼 색상 표현 -->
 		$(function() {
-			checkAddRpBefore();
+			checkAddCommentRpBefore();
 		});
         
         <!-- 좋아요 버튼 클릭 이벤트 및 ajax 실행 -->
-		$("#add-comment-goodRp-btn,#add-comment-heart-btn").click(function() {
-			
+		$("#add-comment-goodRp-btn").click(function() {
+			console.log(1);
             <!-- 이미 싫어요가 눌려 있는 경우 반려 -->
-            if (isAlreadyAddCommnetBadRp == true) {
+            var commentId = $(this).parent().prev().prev().prev().prev().children().val(); 
+            if (isAlreadyAddCommentBadRp == true) {
+            	console.log(2);
 				alert('이미 싫어요를 누르셨습니다.');
+				console.log(3);
 				return;
 			}
             
             <!-- 좋아요가 눌려 있지 않은 경우 좋아요 1 추가 -->
-			if (isAlreadyAddCommnetGoodRp == false) {
+			if (isAlreadyAddCommentGoodRp == false) {
+				console.log(4);
 				$.ajax({
 					url : "/usr/reactionPoint/increaseGoodRp",
+					
 					type : "POST",
-					data : { relTypeCode: 'comment', id : params.id },
+				
+					data : { relTypeCode: 'comment', id : commentId },
+				
 					success : function(goodReactionPoint) {
+						console.log(9);
 						$("#add-comment-goodRp-btn").addClass("already-added");
-						$("#add-comment-heart-btn").addClass("already-added");
+						console.log(10);
 						$(".add-comment-goodRp").html(goodReactionPoint);
-						$(".add-comment-heart").html(goodReactionPoint);
-						isAlreadyAddCommnetGoodRp = true;
+						console.log(11);
+						isAlreadyAddCommentGoodRp = true;
+						console.log(12);
 					},
 					error : function() {
 						alert('서버 에러, 다시 시도해주세요.');
@@ -238,17 +241,24 @@
 				});
                 
               <!-- 이미 좋아요가 눌려 있는 경우 좋아요 1 감소 -->  
-			} else if (isAlreadyAddCommnetGoodRp == true){
+			} else if (isAlreadyAddCommentGoodRp == true){
+				console.log(13);
 				$.ajax({
+					
 					url : "/usr/reactionPoint/decreaseGoodRp",
+					
 					type : "POST",
-					data : { relTypeCode: 'comment', id : params.id },
+				
+					data : { relTypeCode: 'comment', id : commentId },
+					
 					success : function(goodReactionPoint) {
+						console.log(18);
 						$("#add-comment-goodRp-btn").removeClass("already-added");
-						$("#add-comment-heart-btn").removeClass("already-added");
+						console.log(19);
 						$(".add-comment-goodRp").html(goodReactionPoint);
-						$(".add-comment-heart").html(goodReactionPoint);
-						isAlreadyAddCommnetGoodRp = false;
+						console.log(20);
+						isAlreadyAddCommentGoodRp = false;
+						console.log(21);
 					},
 					error : function() {
 						alert('서버 에러, 다시 시도해주세요.');
@@ -263,21 +273,21 @@
 		$("#add-badRp-btn").click(function() {
 			
             <!-- 이미 좋아요가 눌려 있는 경우 반려 -->
-            if (isAlreadyAddCommnetGoodRp == true) {
+            if (isAlreadyAddCommentGoodRp == true) {
 				alert('이미 좋아요를 누르셨습니다.');
 				return;
 			}
             
             <!-- 싫어요가 눌려 있지 않은 경우 싫어요 1 추가 -->
-			if (isAlreadyAddCommnetBadRp == false) {
+			if (isAlreadyAddCommentBadRp == false) {
 				$.ajax({
 					url : "/usr/reactionPoint/increaseBadRp",
 					type : "POST",
-					data : { relTypeCode: 'comment', id : params.id },
+					data : { relTypeCode: 'comment', id : commentId },
 					success : function(badReactionPoint) {
 						$("#add-comment-badRp-btn").addClass("already-added");
 						$(".add-comment-badRp").html(badReactionPoint);
-						isAlreadyAddCommnetBadRp = true;
+						isAlreadyAddCommentBadRp = true;
 					},
 					error : function() {
 						alert('서버 에러, 다시 시도해주세요.');
@@ -285,15 +295,15 @@
 				});
                 
               <!-- 이미 싫어요가 눌려 있는 경우 싫어요 1 감소 --> 
-			} else if (isAlreadyAddCommnetBadRp == true) {
+			} else if (isAlreadyAddCommentBadRp == true) {
 				$.ajax({
 					url : "/usr/reactionPoint/decreaseBadRp",
 					type : "POST",
-					data : { relTypeCode: 'comment', id : params.id },
+					data : { relTypeCode: 'comment', id : commentId },
 					success : function(badReactionPoint) {
 						$("#add-comment-badRp-btn").removeClass("already-added");
 						$(".add-comment-badRp").html(badReactionPoint);
-						isAlreadyAddCommnetBadRp = false;
+						isAlreadyAddCommentBadRp = false;
 					},
 					error : function() {
 						alert('서버 에러, 다시 시도해주세요.');
@@ -427,8 +437,7 @@ $(document).ready(function() {
 						</tr>
 						<c:forEach items="${comments }" var="comment">
 							<tr>
-								<td><input type="hidden" id="commentId" value="${comment.id }"> <input type="hidden" id="articleId"
-									value="${article.id }"></td>
+								<td><input type="hidden" id="commentId" value="${comment.id }"></td>
 								<td>${comment.extra__writer}</td>
 								<td><input style="width: 60%" class="review_content" type="text" value="${comment.body}" autofocus disabled></td>
 								<td><c:if test="${comment.memberId == loginedMemberId}">
@@ -439,13 +448,8 @@ $(document).ready(function() {
 								<td><span id="add-comment-goodRp-btn" class="btn btn-sm">
 										좋아요👍
 										<span class="add-comment-goodRp ml-2">${comment.goodReactionPoint}</span>
-									</span> <span id="add-comment-badRp-btn" class="ml-5 btn btn-sm">
-										싫어요👎
-										<span class="add-comment-badRp ml-2">${comment.badReactionPoint}</span>
-									</span> <span id="add-comment-heart-btn" class="btn btn-sm">
-										❤️
-										<span class="add-comment-heart ml-2">${comment.goodReactionPoint}</span>
 									</span></td>
+
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -479,12 +483,15 @@ $(document).ready(function() {
 						</tr>
 						<c:forEach items="${comments }" var="comment">
 							<tr>
-								<td><input type="hidden" id="commentId" value="${comment.id }"> <input type="hidden" id="articleId"
-									value="${article.id }"></td>
+								<td><input type="hidden" id="commentId" value="${comment.id }"></td>
 								<td>${comment.extra__writer}</td>
 								<td><input class="review_content" type="text" value="${comment.body}" autofocus disabled></td>
 								<td><c:if test="${comment.memberId == loginedMemberId}">
 									</c:if> <br> <label>${comment.regDate.substring(0,10)}</label></td>
+								<td><span id="request-login-good" class="btn btn-sm">
+										좋아요👍
+										<span class="add-comment-goodRp ml-2">${comment.goodReactionPoint}</span>
+									</span></td>
 							</tr>
 						</c:forEach>
 					</tbody>
