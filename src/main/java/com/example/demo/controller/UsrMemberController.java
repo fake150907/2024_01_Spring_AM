@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.service.MemberService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Member;
-import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -88,41 +90,64 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(HttpServletRequest req, String loginId, String loginPw, String name, String nickname,
+	public Map doJoin(HttpServletRequest req, String loginId, String loginPw, String name, String nickname,
 			String cellphoneNum, String email) {
 		Rq rq = (Rq) req.getAttribute("rq");
+		Map<String, Object> joinRd = new HashMap<>();
 		if (rq.isLogined()) {
-			return Ut.jsHistoryBack("F-A", "이미 로그인 상태입니다");
+			joinRd.put("msg", "이미 로그인 상태입니다");
+			joinRd.put("code", "F-A");
+
+			return joinRd;
 		}
 
 		if (Ut.isNullOrEmpty(loginId)) {
-			return Ut.jsHistoryBack("F-1", "아이디를 입력해주세요");
+			joinRd.put("msg", "이미 로그인 상태입니다");
+			joinRd.put("code", "F-1");
+
+			return joinRd;
 		}
 		if (Ut.isNullOrEmpty(loginPw)) {
-			return Ut.jsHistoryBack("F-2", "비밀번호를 입력해주세요");
+			joinRd.put("msg", "비밀번호를 입력해주세요");
+			joinRd.put("code", "F-2");
+
+			return joinRd;
 		}
 		if (Ut.isNullOrEmpty(name)) {
-			return Ut.jsHistoryBack("F-3", "이름을 입력해주세요");
+			joinRd.put("msg", "이름을 입력해주세요");
+			joinRd.put("code", "F-3");
+
+			return joinRd;
 		}
 		if (Ut.isNullOrEmpty(nickname)) {
-			return Ut.jsHistoryBack("F-4", "닉네임을 입력해주세요");
+			joinRd.put("msg", "닉네임을 입력해주세요");
+			joinRd.put("code", "F-4");
+
+			return joinRd;
 		}
 		if (Ut.isNullOrEmpty(cellphoneNum)) {
-			return Ut.jsHistoryBack("F-5", "전화번호를 입력해주세요");
+			joinRd.put("msg", "전화번호를 입력해주세요");
+			joinRd.put("code", "F-5");
+
+			return joinRd;
 
 		}
 		if (Ut.isNullOrEmpty(email)) {
-			return Ut.jsHistoryBack("F-6", "이메일을 입력해주세요");
+			joinRd.put("msg", "이메일을 입력해주세요");
+			joinRd.put("code", "F-6");
+
+			return joinRd;
 		}
 
-		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
+		joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
-		if (joinRd.isFail()) {
-			return Ut.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
+		if (((String) joinRd.get("code")).startsWith("F")) {
+			return joinRd;
 		}
 
-		Member member = memberService.getMember(joinRd.getData1());
+		Member member = memberService.getMember((int) joinRd.get("memberId"));
+		joinRd.put("member", member);
 
-		return Ut.jsReplace(joinRd.getResultCode(), joinRd.getMsg(), "../member/login");
+		return joinRd;
 	}
 }

@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,26 +20,39 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 
-	public ResultData<Integer> join(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
-			String email) {
+	public Map join(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
 
 		Member existsMember = getMemberByLoginId(loginId);
 
+		Map<String, Object> rs = new HashMap<>();
+
 		if (existsMember != null) {
-			return ResultData.from("F-7", Ut.f("이미 사용중인 아이디(%s)입니다", loginId));
+
+			rs.put("msg", Ut.f("이미 사용중인 아이디(%s)입니다", loginId));
+			rs.put("code", "F-7");
+
+			return rs;
 		}
 
 		existsMember = getMemberByNameAndEmail(name, email);
 
 		if (existsMember != null) {
-			return ResultData.from("F-8", Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다", name, email));
+
+			rs.put("msg", Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다", name, email));
+			rs.put("code", "F-8");
+
+			return rs;
 		}
 
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		int id = memberRepository.getLastInsertId();
 
-		return ResultData.from("S-1", "회원가입이 완료되었습니다.", "id", id);
+		rs.put("MemberId", id);
+		rs.put("msg", Ut.f("회원가입이 완료되었습니다. %s님 환영합니다.", name));
+		rs.put("code", "S-1");
+
+		return rs;
 
 	}
 

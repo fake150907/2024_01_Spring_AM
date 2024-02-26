@@ -3,16 +3,40 @@
 <c:set var="pageTitle" value="JOIN"></c:set>
 <%@ include file="../common/head.jspf"%>
 
+<script>
+	function loginIdConfirm() {
+		var form = document.form1;
 
+		var loginId = form.loginId.value;
+
+		$.get('./doJoin', {
+			loginId : loginId
+		}, function(data) {
+
+			var code = data.code;
+
+			$('.rs').text(data.rs);
+			$('.rs-msg').text(data.msg);
+			$('.rs-code').text(code);
+			if (code.startsWith('F')) {
+				history.back();
+			}
+
+		}, 'json');
+
+	}
+</script>
 <section class="mt-8 text-xl px-4">
 	<div class="mx-auto">
-		<form action="../member/doJoin" method="POST">
+		<form name="form1" action="../member/doJoin" method="POST">
 			<table class="join-box table-box-1" border="1">
 				<tbody>
 					<tr>
 						<th>아이디</th>
 						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text"
-							placeholder="아이디를 입력해주세요" name="loginId" /></td>
+							placeholder="아이디를 입력해주세요" name="loginId" />
+							<div class="rs"></div> <input class="btn btn-outline btn-info" onclick="loginIdConfirm();" type="button"
+							value="중복체크" /></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
