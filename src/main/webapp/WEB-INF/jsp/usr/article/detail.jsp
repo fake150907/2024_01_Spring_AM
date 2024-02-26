@@ -314,10 +314,7 @@ function checkAddCommentRpBefore() {
 			}
 		});
 		
-	});		
-	
-	    
-	    
+	});		 
 </script>
 
 
