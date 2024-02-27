@@ -230,7 +230,7 @@ function checkAddCommentRpBefore() {
 						console.log(9);
 						$("#add-comment-goodRp-btn").addClass("already-added");
 						console.log(10);
-						$(".add-comment-goodRp").html(goodReactionPoint);
+						$(".add-comment-goodRp").text(goodReactionPoint);
 						console.log(11);
 						isAlreadyAddCommentGoodRp = true;
 						console.log(12);

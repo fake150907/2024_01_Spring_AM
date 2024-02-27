@@ -147,8 +147,14 @@ public class UsrMemberController {
 		}
 
 		rs.put("code", "S-1");
-		rs.put("msg", "*사용하능한 아이디입니다.");
+		rs.put("msg", "*사용가능한 아이디입니다.");
 
 		return rs;
+	}
+
+	@RequestMapping("/usr/member/myPage")
+	public String showMyPage() {
+
+		return "usr/member/myPage";
 	}
 }
