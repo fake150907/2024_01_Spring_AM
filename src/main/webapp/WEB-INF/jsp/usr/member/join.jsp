@@ -9,7 +9,7 @@
 
 		var loginId = form.loginId.value;
 
-		$.get('./doJoin', {
+		$.get('./loginIdConfirm', {
 			loginId : loginId
 		}, function(data) {
 
@@ -18,9 +18,6 @@
 			$('.rs').text(data.rs);
 			$('.rs-msg').text(data.msg);
 			$('.rs-code').text(code);
-			if (code.startsWith('F')) {
-				history.back();
-			}
 
 		}, 'json');
 
@@ -35,7 +32,7 @@
 						<th>아이디</th>
 						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text"
 							placeholder="아이디를 입력해주세요" name="loginId" />
-							<div class="rs"></div> <input class="btn btn-outline btn-info" onclick="loginIdConfirm();" type="button"
+							<div class="rs-msg"></div> <input class="btn btn-outline btn-info" onclick="loginIdConfirm();" type="button"
 							value="중복체크" /></td>
 					</tr>
 					<tr>

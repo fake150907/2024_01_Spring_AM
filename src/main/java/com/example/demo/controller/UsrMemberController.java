@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.service.MemberService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Member;
+import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -90,64 +91,64 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public Map doJoin(HttpServletRequest req, String loginId, String loginPw, String name, String nickname,
+	public String doJoin(HttpServletRequest req, String loginId, String loginPw, String name, String nickname,
 			String cellphoneNum, String email) {
 		Rq rq = (Rq) req.getAttribute("rq");
-		Map<String, Object> joinRd = new HashMap<>();
 		if (rq.isLogined()) {
-			joinRd.put("msg", "이미 로그인 상태입니다");
-			joinRd.put("code", "F-A");
-
-			return joinRd;
+			return Ut.jsHistoryBack("F-A", "이미 로그인 상태입니다");
 		}
 
 		if (Ut.isNullOrEmpty(loginId)) {
-			joinRd.put("msg", "이미 로그인 상태입니다");
-			joinRd.put("code", "F-1");
-
-			return joinRd;
+			return Ut.jsHistoryBack("F-1", "아이디를 입력해주세요");
 		}
 		if (Ut.isNullOrEmpty(loginPw)) {
-			joinRd.put("msg", "비밀번호를 입력해주세요");
-			joinRd.put("code", "F-2");
-
-			return joinRd;
+			return Ut.jsHistoryBack("F-2", "비밀번호를 입력해주세요");
 		}
 		if (Ut.isNullOrEmpty(name)) {
-			joinRd.put("msg", "이름을 입력해주세요");
-			joinRd.put("code", "F-3");
-
-			return joinRd;
+			return Ut.jsHistoryBack("F-3", "이름을 입력해주세요");
 		}
 		if (Ut.isNullOrEmpty(nickname)) {
-			joinRd.put("msg", "닉네임을 입력해주세요");
-			joinRd.put("code", "F-4");
-
-			return joinRd;
+			return Ut.jsHistoryBack("F-4", "닉네임을 입력해주세요");
 		}
 		if (Ut.isNullOrEmpty(cellphoneNum)) {
-			joinRd.put("msg", "전화번호를 입력해주세요");
-			joinRd.put("code", "F-5");
-
-			return joinRd;
+			return Ut.jsHistoryBack("F-5", "전화번호를 입력해주세요");
 
 		}
 		if (Ut.isNullOrEmpty(email)) {
-			joinRd.put("msg", "이메일을 입력해주세요");
-			joinRd.put("code", "F-6");
-
-			return joinRd;
+			return Ut.jsHistoryBack("F-6", "이메일을 입력해주세요");
 		}
 
-		joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
+		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
-		if (((String) joinRd.get("code")).startsWith("F")) {
-			return joinRd;
+		if (joinRd.isFail()) {
+			return Ut.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
 		}
 
-		Member member = memberService.getMember((int) joinRd.get("memberId"));
-		joinRd.put("member", member);
+		Member member = memberService.getMember(joinRd.getData1());
 
-		return joinRd;
+		return Ut.jsReplace(joinRd.getResultCode(), joinRd.getMsg(), "../member/login");
+	}
+
+	@RequestMapping("/usr/member/loginIdConfirm")
+	@ResponseBody
+	public Map<String, Object> loginIdConfirm(HttpServletRequest req, String loginId, String loginPw, String name,
+			String nickname, String cellphoneNum, String email) {
+		Rq rq = (Rq) req.getAttribute("rq");
+		Member existsMember = memberService.getMemberByLoginId(loginId);
+
+		Map<String, Object> rs = new HashMap<>();
+
+		if (existsMember != null) {
+
+			rs.put("msg", Ut.f("*이미 사용중인 아이디(%s)입니다", loginId));
+			rs.put("code", "F-7");
+
+			return rs;
+		}
+
+		rs.put("code", "S-1");
+		rs.put("msg", "*사용하능한 아이디입니다.");
+
+		return rs;
 	}
 }
