@@ -29,12 +29,39 @@
 		<button class="btn btn-outline" onclick="setZoomable(false)">지도 확대/축소 끄기</button>
 		<button class="btn btn-outline" onclick="setZoomable(true)">지도 확대/축소 켜기</button>
 	</p>
+	<p><em>지도를 클릭해주세요!</em></p> 
+	<div id="clickLatlng"></div>
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cbb9e3d7d768b8c1c16039718e05b00"></script>
 	<script>
+		var lat;
+		var lon;
+		//		주차장
+		async function getData2() {
+			const API_KEY = '발급받은 API 키';
+			const url = 'https://www.yuseong.go.kr/ys_parking/ysparkingList/ORP/getJSONData.do?_wadl&type=json';
+			const response = await fetch(url);
+			const data = await
+			response.json();
+
+			console.log("data", data);
+			console.log(data.response);
+			console.log(data.response.body);
+			console.log(data.response.header);
+			console.log(data.response.body.items);
+			console.log(data.response.body.items[0]);
+			console.log(data.response.body.items[0].item.addr);
+			console.log(data.response.body.items[0].item.latitude);
+			console.log(data.response.body.items[0].item.longitude);
+
+			lat = data.response.body.items[0].item.latitude;
+			lon = data.response.body.items[0].item.longitude;
+		}
+		getData2();
+		
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
-			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			center : new kakao.maps.LatLng(36.35053893518407, 127.38482370655444), // 지도의 중심좌표
 			level : 3
 		// 지도의 확대 레벨
 		};
@@ -43,7 +70,7 @@
 
 		function setCenter() {
 			// 이동할 위도 경도 위치를 생성합니다 
-			var moveLatLon = new kakao.maps.LatLng(33.452613, 126.570888);
+			var moveLatLon = new kakao.maps.LatLng(36.35053893518407 , 127.38482370655444 );
 
 			// 지도 중심을 이동 시킵니다
 			map.setCenter(moveLatLon);
@@ -51,7 +78,7 @@
 
 		function panTo() {
 			// 이동할 위도 경도 위치를 생성합니다 
-			var moveLatLon = new kakao.maps.LatLng(33.450580, 126.574942);
+			var moveLatLon = new kakao.maps.LatLng(lat, lon);
 
 			// 지도 중심을 부드럽게 이동시킵니다
 			// 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
@@ -114,6 +141,32 @@
 			// 마우스 휠로 지도 확대,축소 가능여부를 설정합니다
 			map.setZoomable(zoomable);
 		}
+		
+		// 지도를 클릭한 위치에 표출할 마커입니다
+		var marker = new kakao.maps.Marker({ 
+		    // 지도 중심좌표에 마커를 생성합니다 
+		    position: map.getCenter() 
+		}); 
+		// 지도에 마커를 표시합니다
+		marker.setMap(map);
+
+		// 지도에 클릭 이벤트를 등록합니다
+		// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+		    
+		    // 클릭한 위도, 경도 정보를 가져옵니다 
+		    var latlng = mouseEvent.latLng; 
+		    
+		    // 마커 위치를 클릭한 위치로 옮깁니다
+		    marker.setPosition(latlng);
+		    
+		    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+		    message += '경도는 ' + latlng.getLng() + ' 입니다';
+		    
+		    var resultDiv = document.getElementById('clickLatlng'); 
+		    resultDiv.innerHTML = message;
+		    
+		});
 	</script>
 </body>
 </html>
