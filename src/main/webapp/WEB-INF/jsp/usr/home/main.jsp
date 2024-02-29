@@ -10,8 +10,8 @@
 <title>Sla Recipe</title>
 <style>
 .SlaRecipeStartPageVer01 {
-	width: 1440px;
-	height: 900px;
+	width: 1910px;
+	height: 1100px;
 	position: relative;
 	background: white;
 }
@@ -28,9 +28,14 @@
 .HeadIcons {
 	width: 160px;
 	height: 55px;
-	left: 1214px;
-	top: 59px;
+	left: 88%;
+	top: 5%;
 	position: absolute;
+}
+
+.HeadIcons img {
+	width: 60px;
+	height: 60px;
 }
 
 .logo {
@@ -39,18 +44,20 @@
 	height: 193px;
 }
 
-.LoginIcon, .MenuIcon {
-	width: 43.96px;
-	height: 38.19px;
+.SearchIcon, .LoginIcon, .MenuIcon {
+	font-size: 15px;
+	width: 63px;
+	height: 58px;
 	position: absolute;
+	width: 43.96px;
 }
 
 .MenuIcon {
-	left: 116.04px;
+	left: 80%;
 }
 
 .LoginIcon {
-	left: 52.75px;
+	left: 40%;
 }
 
 .Group6 {
@@ -62,7 +69,7 @@
 }
 
 .SlaRecipeStartHeadBar {
-	width: 1440px;
+	width: 100%;
 	height: 99px;
 	left: 0;
 	top: 0;
@@ -103,20 +110,266 @@
 	display: flex;
 	align-items: center;
 }
-
-.DoubleArrowFill0Wght400Grad0Opsz241 {
-	width: 30px;
-	height: 30px;
-	padding: 6.25px;
-	left: 274.07px;
-	display: inline-flex;
-	justify-content: center;
+/*하단 바*/
+.startPage_bottom_Container {
+	width: 100%;
+	height: 99px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	justify-content: space-between;
 	align-items: center;
-	border: 1px rgba(0, 0, 0, 0) solid;
+	background: rgba(255, 255, 255, 0.3); /* 배경색을 흰색으로 투명도 조절 */
+	backdrop-filter: blur(10px); /* 블러 효과 추가 */
+	padding: 0 20px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.startPage_bottom_box1, .startPage_bottom_box2, .startPage_bottom_box3,
+	.startPage_bottom_box4 {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+.startPage_bottom_item1, .startPage_bottom_item2,
+	.startPage_bottom_item3, .startPage_bottom_item4 {
+	width: 477px;
+	height: 99px;
+	left: -19.5px;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 20px;
+	box-sizing: border-box;
+}
+
+.startPage_bottom_box1:hover .startPage_bottom_item1 {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.startPage_bottom_box1:hover .introduce_box {
+	display: block;
+}
+
+.startPage_bottom_box2:hover .startPage_bottom_item2 {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.startPage_bottom_box2:hover .ingredients_box {
+	display: block;
+}
+
+.startPage_bottom_box3:hover .startPage_bottom_item3 {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.startPage_bottom_box3:hover .recommendRecipe_box {
+	display: block;
+}
+
+.startPage_bottom_box4:hover .startPage_bottom_item4 {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.startPage_bottom_box4:hover .recipeList_box {
+	display: block;
+}
+
+.separator1 {
+	width: 1px;
+	left: 477px;
+	position: absolute;
+	height: 99px;
+	background-color: #ccc;
+}
+
+.separator2 {
+	width: 1px;
+	left: 954px;
+	position: absolute;
+	height: 99px;
+	background-color: #ccc;
+}
+
+.separator3 {
+	width: 1px;
+	left: 1431px;
+	position: absolute;
+	height: 99px;
+	background-color: #ccc;
+}
+
+.icon {
+	border-radius: 5px;
+	margin-right: 10px;
+}
+
+.icon img {
+	color: rgba(0, 0, 0, 0.5);
+	width: 35px;
+	height: 35px;
+	border-radius: 5px;
+	margin-right: 10px;
+}
+
+.startPage_bottom_content {
+	color: rgba(0, 0, 0, 0.8);
+	font-size: 25px;
+	width: 400px;
+	font-family: Inter;
+	font-weight: 500;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	display: flex;
+	font-family: Inter;
+}
+
+.introduce_box, .ingredients_box, .recommendRecipe_box, .recipeList_box
+	{
+	background: rgba(0, 0, 0, 0.3);
+	width: 1910px;
+	height: 800px;
+	position: absolute;
+	bottom: 99px;
+	backdrop-filter: blur(10px);
+	display: none;
+}
+
+.introduce_box {
+	left: -2px;
+}
+
+.ingredients_box {
+	left: -477px;
+}
+
+.recommendRecipe_box {
+	left: -954px;
+}
+
+.recipeList_box {
+	left: -1431px;
+}
+
+/* 타이틀 */
+.header-container {
+	width: 602px;
+	height: 157px;
+	position: relative;
+}
+
+.title, .subtitle {
+	position: absolute;
+	color: white;
+	font-family: Inter;
+	font-weight: 600;
+	word-wrap: break-word;
+	left: 35%;
+}
+
+.title {
+	font-size: 90px;
+	width: 450px;
+	top: 0px;
+}
+
+.subtitle {
+	width: 800px;
+	font-size: 40px;
+	top: 109px;
 }
 
 .material-symbols-outlined {
 	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+}
+/* 재료공구 */
+.ingredients_img1 {
+	width: 605px;
+	height: 345px;
+	top: 150px;
+	left: 350px;
+	border-radius: 10px;
+	position: absolute;
+	background: linear-gradient(0deg, #D9D9D9 0%, #D9D9D9 100%);
+}
+
+.ingredients_img2 {
+	width: 605px;
+	height: 345px;
+	top: 300px;
+	left: 900px;
+	position: absolute;
+	background: linear-gradient(0deg, #D9D9D9 0%, #D9D9D9 100%);
+	border-radius: 10px;
+}
+
+.ingredients_item1, .ingredients_item2 {
+	width: 605px;
+	position: relative;
+}
+
+.ingredients_content {
+	width: 566px;
+	height: 66px;
+	position: absolute;
+	left: 350px;
+	top: 50px;
+}
+
+.ingredients_content2 {
+	width: 566px;
+	height: 66px;
+	position: absolute;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 24px;
+	word-wrap: break-word;
+	left: 900px;
+	top: 666px;
+	font-family: Inter;
+	color: white;
+}
+
+.ingredients_content>.title {
+	left: 0;
+	top: 0;
+	position: absolute;
+	color: white;
+	font-size: 35px;
+	font-family: Inter;
+	font-weight: 600;
+	line-height: 42px;
+	word-wrap: break-word;
+}
+
+.ingredients_content>.subtitle {
+	left: 151px;
+	top: 9px;
+	position: absolute;
+	color: white;
+	font-size: 20px;
+	font-family: Inter;
+	font-weight: 600;
+	line-height: 24px;
+	word-wrap: break-word;
+}
+
+.ingredients_content>.description {
+	left: 0;
+	top: 42px;
+	position: absolute;
+	color: white;
+	font-size: 20px;
+	font-family: Inter;
+	font-weight: 600;
+	line-height: 24px;
+	word-wrap: break-word;
 }
 </style>
 </head>
@@ -131,6 +384,10 @@
 					alt="Background Image" />
 			</a>
 		</div>
+		<div class="header-container">
+			<div class="title">Sla Recipe</div>
+			<div class="subtitle">A Taste to Build Your Dream On</div>
+		</div>
 		<div class="HeadIcons">
 			<div class="SearchIcon">
 				<a href="">
@@ -139,51 +396,88 @@
 				</a>
 			</div>
 			<div class="LoginIcon">
-				<div class="Vector"></div>
-				<div class="Vector"></div>
-				<div class="Login">Login</div>
+				<a href="">
+					<img src="https://velog.velcdn.com/images/fake150907/post/cb9fe070-b691-4cf6-b7cf-a4ddd545b586/image.svg" />
+					Login
+				</a>
 			</div>
 			<div class="MenuIcon">
-				<div class="Vector"></div>
-				<div class="Vector"></div>
-				<div class="Menu">Menu</div>
+				<a href="">
+					<img src="https://velog.velcdn.com/images/fake150907/post/34249e90-532a-4676-b0ca-321777ab36f5/image.svg" />
+					Menu
+				</a>
 			</div>
 		</div>
-		<div class="Group6">
-			<div class="SlaRecipeStartHeadBar">
-				<div class="Rectangle43"></div>
-				<div class="Rectangle42"></div>
-				<div class="Rectangle41"></div>
-				<div class="Rectangle40"></div>
-				<div class="Group22">
-					<div class="DoubleArrowFill0Wght400Grad0Opsz241">
-						<div class="Vector"></div>
-					</div>
-					<div>아무개소개</div>
-				</div>
-				<div class="Group23">
-					<div class="DoubleArrowFill0Wght400Grad0Opsz241">
-						<div class="Vector"></div>
-					</div>
-					<div>재료공구</div>
-				</div>
-				<div class="Group24">
-					<div class="DoubleArrowFill0Wght400Grad0Opsz241">
-						<div class="Vector"></div>
-					</div>
-					<div>맟춤레시피</div>
-				</div>
-				<div class="Group25">
-					<div class="DoubleArrowFill0Wght400Grad0Opsz241">
-						<div class="Vector"></div>
-					</div>
-					<div>레시피 목록</div>
+		<div class="startPage_bottom_Container">
+			<div class="startPage_bottom_box1">
+				<div class="startPage_bottom_item1">
+					<div class="introduce_box"></div>
+					<a href="">
+						<div class="startPage_bottom_content">
+							아무개소개
+							<div class="icon">
+								<img src="https://velog.velcdn.com/images/fake150907/post/7379f23c-b9d0-4da9-bf1d-3eba0567ea40/image.svg" alt="" />
+							</div>
+						</div>
+					</a>
 				</div>
 			</div>
-			<div class="Group5">
-				<div class="Line20"></div>
-				<div class="Line19"></div>
-				<div class="Line21"></div>
+			<div class="separator1"></div>
+			<div class="startPage_bottom_box2">
+				<div class="startPage_bottom_item2">
+					<div class="ingredients_box">
+						<div class="ingredients_item1">
+							<div class="ingredients_content">
+								<div class="title">재료공구</div>
+								<div class="subtitle">신선한 재료로 요리하고싶은 당신의 마음!</div>
+								<div class="description">마트에 가서 재료를 사도 혼자 사는 당신들이 먹기에는 양이 너무 많다!</div>
+							</div>
+							<img class="ingredients_img1"
+								src="https://velog.velcdn.com/images/fake150907/post/f78257ce-3777-4a59-9bf6-7b8323cd1810/image.jpg" />
+						</div>
+						<div class="ingredients_item2">
+							<div class="ingredients_content2">이제 다른 사람들과 재료를 공동구매해서 항상 신선하고 질 좋은 재료로 식사해보세요!</div>
+							<img class="ingredients_img2"
+								src="https://velog.velcdn.com/images/fake150907/post/8ce2087f-9ea9-433b-94e6-d3f38de359a3/image.jpg" />
+						</div>
+					</div>
+					<a href="">
+						<div class="startPage_bottom_content">
+							재료공구
+							<div class="icon">
+								<img src="https://velog.velcdn.com/images/fake150907/post/7379f23c-b9d0-4da9-bf1d-3eba0567ea40/image.svg" alt="" />
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="separator2"></div>
+			<div class="startPage_bottom_box3">
+				<div class="startPage_bottom_item3">
+					<div class="recommendRecipe_box"></div>
+					<a href="">
+						<div class="startPage_bottom_content">
+							맟춤레시피
+							<div class="icon">
+								<img src="https://velog.velcdn.com/images/fake150907/post/7379f23c-b9d0-4da9-bf1d-3eba0567ea40/image.svg" alt="" />
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="separator3"></div>
+			<div class="startPage_bottom_box4">
+				<div class="startPage_bottom_item4">
+					<div class="recipeList_box"></div>
+					<a href="">
+						<div class="startPage_bottom_content">
+							레시피 목록
+							<div class="icon">
+								<img src="https://velog.velcdn.com/images/fake150907/post/7379f23c-b9d0-4da9-bf1d-3eba0567ea40/image.svg" alt="" />
+							</div>
+						</div>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
