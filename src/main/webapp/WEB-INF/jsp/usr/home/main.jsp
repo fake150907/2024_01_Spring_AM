@@ -1,17 +1,97 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="MAIN"></c:set>
-<%@ include file="../common/head.jspf"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${pageTitle }</title>
+<link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script>
+<!-- 테일윈드 불러오기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
+
+<!-- daisy ui 불러오기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/daisyui/4.6.1/full.css" />
+
+<!-- 폰트어썸 불러오기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+<!-- 제이쿼리 불러오기 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sla Recipe</title>
+<script>
+//요소를 가져옵니다.
+const introduceBox = document.querySelector('.introduce_box');
+const ingredientsBox = document.querySelector('.ingredients_box');
+const recommendRecipeBox = document.querySelector('.recommendRecipe_box');
+const recipeListBox = document.querySelector('.recipeList_box');
+
+// 각 상자에 대한 마우스 진입 및 빠져 나가기 이벤트를 추가합니다.
+// 마우스 진입 이벤트
+document.querySelector('.startPage_bottom_box1').addEventListener('mouseenter', () => {
+    introduceBox.style.display = 'block'; // 요소를 보이도록 변경
+    setTimeout(() => {
+        introduceBox.style.opacity = 1; // 투명도를 1로 설정하여 부드럽게 보이도록 함
+    }, 100);
+});
+
+document.querySelector('.startPage_bottom_box2').addEventListener('mouseenter', () => {
+    ingredientsBox.style.display = 'block'; // 요소를 보이도록 변경
+    setTimeout(() => {
+        ingredientsBox.style.opacity = 1; // 투명도를 1로 설정하여 부드럽게 보이도록 함
+    }, 100);
+});
+
+document.querySelector('.startPage_bottom_box3').addEventListener('mouseenter', () => {
+    recommendRecipeBox.style.display = 'block'; // 요소를 보이도록 변경
+    setTimeout(() => {
+        recommendRecipeBox.style.opacity = 1; // 투명도를 1로 설정하여 부드럽게 보이도록 함
+    }, 100);
+});
+
+document.querySelector('.startPage_bottom_box4').addEventListener('mouseenter', () => {
+    recipeListBox.style.display = 'block'; // 요소를 보이도록 변경
+    setTimeout(() => {
+        recipeListBox.style.opacity = 1; // 투명도를 1로 설정하여 부드럽게 보이도록 함
+    }, 100);
+});
+
+// 마우스 빠져 나가기 이벤트
+document.querySelector('.startPage_bottom_box1').addEventListener('mouseleave', () => {
+    introduceBox.style.opacity = 0; // 투명도를 0으로 설정하여 사라지도록 함
+    setTimeout(() => {
+        introduceBox.style.display = 'none'; // 요소를 숨기도록 변경
+    }, 300); // 0.3초 후에 요소를 숨김
+});
+
+document.querySelector('.startPage_bottom_box2').addEventListener('mouseleave', () => {
+    ingredientsBox.style.opacity = 0; // 투명도를 0으로 설정하여 사라지도록 함
+    setTimeout(() => {
+        ingredientsBox.style.display = 'none'; // 요소를 숨기도록 변경
+    }, 300); // 0.3초 후에 요소를 숨김
+});
+
+document.querySelector('.startPage_bottom_box3').addEventListener('mouseleave', () => {
+    recommendRecipeBox.style.opacity = 0; // 투명도를 0으로 설정하여 사라지도록 함
+    setTimeout(() => {
+        recommendRecipeBox.style.display = 'none'; // 요소를 숨기도록 변경
+    }, 300); // 0.3초 후에 요소를 숨김
+});
+
+document.querySelector('.startPage_bottom_box4').addEventListener('mouseleave', () => {
+    recipeListBox.style.opacity = 0; // 투명도를 0으로 설정하여 사라지도록 함
+    setTimeout(() => {
+        recipeListBox.style.display = 'none'; // 요소를 숨기도록 변경
+    }, 300); // 0.3초 후에 요소를 숨김
+});
+</script>
 <style>
 .SlaRecipeStartPageVer01 {
 	width: 1910px;
-	height: 1100px;
+	height: 940px;
 	position: relative;
 	background: white;
 }
@@ -239,6 +319,13 @@
 	bottom: 99px;
 	backdrop-filter: blur(10px);
 	display: none;
+	opacity: 1; /* 투명도를 1로 설정하여 요소를 부드럽게 보여줌 */
+	transition: opacity 0.3s ease;
+}
+
+.startPage_bottom_box2:hover .ingredients_box {
+	opacity: 1; /* 투명도를 1로 설정하여 요소를 부드럽게 보여줌 */
+	transition: opacity 0.3s ease;
 }
 
 .introduce_box {
@@ -255,6 +342,45 @@
 
 .recipeList_box {
 	left: -1431px;
+}
+
+/* .startPage_bottom_box1, .startPage_bottom_box2, .startPage_bottom_box3, .startPage_bottom_box4에 hover 시 transition 효과 적용 */
+.startPage_bottom_box1:hover .startPage_bottom_item1,
+	.startPage_bottom_box2:hover .startPage_bottom_item2,
+	.startPage_bottom_box3:hover .startPage_bottom_item3,
+	.startPage_bottom_box4:hover .startPage_bottom_item4 {
+	background: rgba(0, 0, 0, 0.3);
+	transition: background 0.3s ease; /* 배경색 변화에 대한 transition 효과 설정 */
+}
+
+.startPage_bottom_box1:hover>.introduce_box, .startPage_bottom_box2:hover>.ingredients_box,
+	.startPage_bottom_box3:hover>.recommendRecipe_box,
+	.startPage_bottom_box4:hover>.recipeList_box {
+	display: block;
+	opacity: 1; /* 투명도를 1로 설정하여 요소를 부드럽게 보여줌 */
+	transition: opacity 0.3s ease; /* opacity 속성에 대한 transition 효과 설정 */
+}
+
+/* .introduce_box, .ingredients_box, .recommendRecipe_box, .recipeList_box의 display 속성을 변경하여 효과적으로 보여줌 */
+.introduce_box, .ingredients_box, .recommendRecipe_box, .recipeList_box
+	{
+	background: rgba(0, 0, 0, 0.3);
+	width: 1910px;
+	height: 800px;
+	position: absolute;
+	bottom: 99px;
+	backdrop-filter: blur(10px);
+	display: none;
+	transition: background 0.3s; /* opacity 속성에 대한 transition 효과 설정 */
+}
+
+/* 해당 박스에 마우스를 올렸을 때 내부 요소를 부드럽게 표시 */
+.startPage_bottom_box1:hover .introduce_box, .startPage_bottom_box2:hover .ingredients_box,
+	.startPage_bottom_box3:hover .recommendRecipe_box,
+	.startPage_bottom_box4:hover .recipeList_box {
+	display: block;
+	opacity: 1; /* 투명도를 1로 설정하여 요소를 부드럽게 보여줌 */
+	transition: opacity 0.3s ease; /* opacity 속성에 대한 transition 효과 설정 */
 }
 
 /* 타이틀 */
@@ -372,6 +498,7 @@
 	word-wrap: break-word;
 }
 </style>
+
 </head>
 <body>
 	<div class="SlaRecipeStartPageVer01">

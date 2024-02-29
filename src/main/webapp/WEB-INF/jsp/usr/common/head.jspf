@@ -19,18 +19,139 @@
 <!-- 제이쿼리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+<style>
+.head_img_box {
+	width: 100%;
+	hegiht: 50px;
+	position: absolute;
+}
+
+.head_img_box>.head_img {
+	width: 100%;
+	hegiht: 50px;
+	position: absolute;
+}
+
+.head_bar {
+	position: absolute;
+	left: 1450px;
+}
+
+.HeadIcons {
+	width: 210px;
+	height: 55px;
+	right: 42px;
+	top: 5%;
+	position: absolute;
+}
+
+.HeadIcons img {
+	width: 60px;
+	height: 60px;
+}
+
+.logo {
+	left: 15px;
+	top: 2px;
+	height: 193px;
+	position: absolute;
+	width: 153px;
+}
+
+.SearchIcon, .LoginIcon, .JoinIcon, .MenuIcon {
+	font-size: 15px;
+	width: 63px;
+	height: 58px;
+	position: absolute;
+	width: 43.96px;
+}
+
+.MenuIcon {
+	left: 90%;
+}
+
+.LoginIcon {
+	left: 33%;
+}
+
+.JoinIcon {
+	left: 63%;
+}
+
+.header-container {
+	width: 602px;
+	top: 70px;
+	position: relative;
+	height: 157px;
+}
+
+.title, .subtitle {
+	position: absolute;
+	color: white;
+	font-family: Inter;
+	font-weight: 600;
+	word-wrap: break-word;
+	left: 35%;
+}
+
+.title {
+	font-size: 80px;
+	width: 450px;
+	top: 0px;
+}
+
+.subtitle {
+	width: 800px;
+	font-size: 40px;
+	top: 89px;
+}
+</style>
+
 </head>
 <body>
 	<header>
+		<div class="head_img_box">
+			<img class="head_img"
+				src="https://velog.velcdn.com/images/fake150907/post/abab2b27-adb5-4382-8490-7bcf8b7dcac4/image.PNG" alt="" />
+		</div>
 		<div class="h-20 flex mx-auto items-center text-3xl">
 			<div class="logo">
 				<a href="/">
-					<img src="https://velog.velcdn.com/images/fake150907/post/265346d4-9a4e-4661-8925-816dcc4ffa21/image.png"
-						alt="Background Image" />
+					<img class="logo"
+						src="https://velog.velcdn.com/images/fake150907/post/265346d4-9a4e-4661-8925-816dcc4ffa21/image.png" alt="Logo">
 				</a>
 			</div>
-			<div class="flex-grow"></div>
-			<ul class="flex">
+			<div class="header-container">
+				<div class="title">Sla Recipe</div>
+				<div class="subtitle">A Taste to Build Your Dream On</div>
+			</div>
+			<div class="HeadIcons">
+				<div class="SearchIcon">
+					<a href="">
+						<img src="https://velog.velcdn.com/images/fake150907/post/c3ce7de3-1a43-42f7-88bf-e8d45e5fdd04/image.svg">
+						Search
+					</a>
+				</div>
+				<div class="LoginIcon">
+					<a href="">
+						<img src="https://velog.velcdn.com/images/fake150907/post/cb9fe070-b691-4cf6-b7cf-a4ddd545b586/image.svg" />
+						Login
+					</a>
+				</div>
+				<div class="JoinIcon">
+					<a href="">
+						<img src="https://velog.velcdn.com/images/fake150907/post/4493bd3f-6ccf-491d-9b35-10a2843a6db9/image.svg" />
+						Join
+					</a>
+				</div>
+				<div class="MenuIcon">
+					<a href="">
+						<img src="https://velog.velcdn.com/images/fake150907/post/34249e90-532a-4676-b0ca-321777ab36f5/image.svg" />
+						Menu
+					</a>
+				</div>
+			</div>
+			<ul class="flex head_bar">
 				<li>
 					<a class="hover:underline" href="/">HOME</a>
 				</li>
