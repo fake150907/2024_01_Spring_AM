@@ -9,29 +9,58 @@
 <meta charset="utf-8">
 <title>지도 이동시키기</title>
 
+<style>
+#map {
+	width: 1400px;
+	left:520px;
+	top:200px;
+	height: 750px;
+	position:absolute;
+}
+body > p{
+position:absolute;
+left:600px;
+z-index: 2;
+}
+body > .p1{
+	top:20%;
+}
+body > .p2{
+	top:40%;
+}
+body > .p3{
+	top:60%;
+}
+body >.p4{
+	top:80%;
+}
+body >.p5{
+	top:95%;
+}
+</style>
 </head>
 <body>
-	<div id="map" style="width: 100%; height: 350px;"></div>
-	<p>
+	
+	<p class="p1">
 		<button class="btn btn-outline" onclick="setCenter()">지도 중심좌표 이동시키기</button>
 		<button class="btn btn-outline" onclick="panTo()">지도 중심좌표 부드럽게 이동시키기</button>
 	</p>
-	<p>
+	<p class="p2">
 		<button class="btn btn-outline" onclick="zoomIn()">지도레벨 - 1</button>
 		<button class="btn btn-outline" onclick="zoomOut()">지도레벨 + 1</button>
 		<span id="maplevel"></span>
 	</p>
-	<p>
+	<p class="p3">
 		<button class="btn btn-outline" onclick="setDraggable(false)">지도 드래그 이동 끄기</button>
 		<button class="btn btn-outline" onclick="setDraggable(true)">지도 드래그 이동 켜기</button>
 	</p>
-	<p>
+	<p class="p4">
 		<button class="btn btn-outline" onclick="setZoomable(false)">지도 확대/축소 끄기</button>
 		<button class="btn btn-outline" onclick="setZoomable(true)">지도 확대/축소 켜기</button>
 	</p>
-	<p><em>지도를 클릭해주세요!</em></p> 
+	<p class="p5"><em>지도를 클릭해주세요!</em></p> 
 	<div id="clickLatlng"></div>
-
+	<div id="map"></div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cbb9e3d7d768b8c1c16039718e05b00"></script>
 	<script>
 		var lat;
