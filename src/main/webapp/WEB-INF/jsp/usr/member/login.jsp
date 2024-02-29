@@ -18,6 +18,10 @@
 
 <!-- 제이쿼리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- 구글 폰트 불러오기  -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <style>
 /* 공통 스타일 */
 .SlaRecipeLoginPageVer02 {
@@ -55,9 +59,8 @@
 	display: inline-flex;
 }
 
-.login_MenuIcon img {
-	width: 38px;
-	height: 38px;
+.material-symbols-outlined {
+	font-size: 40px;
 }
 
 .Menu {
@@ -139,6 +142,16 @@
 	top: 294px;
 }
 
+.inputLoginId {
+	background-color: #FFFACD;
+	left: 50px;
+}
+
+.inputLoginPw {
+	background-color: #FFFACD;
+	left: 35px;
+}
+
 .LoginPwBox {
 	left: 933px;
 	top: 474px;
@@ -157,6 +170,33 @@
 
 .LoginBtn_box:hover>.LoginBtn {
 	background-color: #FFC700;
+}
+
+.inputLoginId_box, .inputLoginPw_box {
+	position: absolute;
+}
+
+.inputLoginId_box>img {
+	position: absolute;
+	top: 8px;
+	height: 30px;
+	width: 35px;
+}
+
+.inputLoginId_box>.inputLoginId {
+	position: relative;
+}
+
+.inputLoginPw_box>img {
+	position: absolute;
+	top: 8px;
+	height: 30px;
+	width: 35px;
+}
+
+.inputLoginPw_box>.inputLoginPw {
+	position: relative;
+	left: 50px;
 }
 
 .SlaRecipe {
@@ -212,9 +252,9 @@
 	<div class="Rectangle57"></div>
 	<div class="HeadIcons">
 		<div class="login_MenuIcon">
-			<a href="">
-				<img src="https://velog.velcdn.com/images/fake150907/post/34249e90-532a-4676-b0ca-321777ab36f5/image.svg" />
-				Menu
+			<a href="/">
+				<span class="material-symbols-outlined"> home </span>
+				Home
 			</a>
 		</div>
 	</div>
@@ -225,16 +265,20 @@
 	<form action="../member/doLogin" method="POST">
 		<div class="LoginIdBox">
 			<div style="font-size: 35px; font-family: Inter; font-weight: 600;">아이디</div>
-			<input style="font-size: 20px; font-family: Inter; font-weight: 600;"
-				class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="아이디를 입력해주세요"
-				name="loginId" />
+			<div class="inputLoginId_box">
+				<img src="https://velog.velcdn.com/images/fake150907/post/9385617a-3763-433f-8c7c-6b9134eff921/image.svg" alt="" />
+				<input style="font-size: 20px; font-family: Inter; font-weight: 600;" class="inputLoginId input w-full"
+					autocomplete="off" type="text" placeholder="아이디를 입력해주세요" name="loginId" />
+			</div>
 			<div class="Line21"></div>
 		</div>
 		<div class="LoginPwBox">
 			<div style="font-size: 35px; font-family: Inter; font-weight: 600;">비밀번호</div>
-			<input style="font-size: 20px; font-family: Inter; font-weight: 600;"
-				class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="비밀번호를 입력해주세요"
-				name="loginPw" />
+			<div class="inputLoginPw_box">
+				<img src="https://velog.velcdn.com/images/fake150907/post/1286d64c-f81c-4b1f-95a3-bb555e940bd9/image.svg" alt="" />
+				<input style="font-size: 20px; font-family: Inter; font-weight: 600;" class="inputLoginPw input w-full"
+					autocomplete="off" type="text" placeholder="비밀번호를 입력해주세요" name="loginPw" />
+			</div>
 			<div class="LockFill0Wght400Grad0Opsz241">
 				<div class="Vector"></div>
 			</div>

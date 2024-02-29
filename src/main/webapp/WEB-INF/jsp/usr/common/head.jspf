@@ -87,17 +87,18 @@
 
 .title, .subtitle {
 	position: absolute;
+	font-weight: 600;
+	left: 35%;
+	color: white;
+	word-wrap: break-word;
 	color: white;
 	font-family: Inter;
-	font-weight: 600;
-	word-wrap: break-word;
-	left: 35%;
 }
 
 .title {
+	top: 0px;
 	font-size: 80px;
 	width: 450px;
-	top: 0px;
 }
 
 .subtitle {
